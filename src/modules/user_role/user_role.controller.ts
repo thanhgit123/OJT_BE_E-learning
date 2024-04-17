@@ -9,7 +9,7 @@ export class UserRoleController {
 
   @Post()
   create(@Body() createUserRoleDto: CreateUserRoleDto) {
-    return this.userRoleService.create(createUserRoleDto);
+    return ;
   }
 
   @Get()

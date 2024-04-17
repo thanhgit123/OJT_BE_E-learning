@@ -1,11 +1,23 @@
 import { Injectable } from '@nestjs/common';
 import { CreateUserRoleDto } from './dto/create-user_role.dto';
 import { UpdateUserRoleDto } from './dto/update-user_role.dto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { UserRole } from './entities/user_role.entity';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class UserRoleService {
-  create(createUserRoleDto: CreateUserRoleDto) {
-    return 'This action adds a new userRole';
+  constructor(
+    @InjectRepository(UserRole)
+    private readonly usersRepository: Repository<UserRole>,
+  ) {}
+  createUserRole(user_role:any) {
+    return this.usersRepository
+      .createQueryBuilder('users')
+      .insert()
+      .into("user_role")
+      .values(user_role)
+      .execute();
   }
 
   findAll() {
