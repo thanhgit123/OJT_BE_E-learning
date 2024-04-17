@@ -11,7 +11,7 @@ export class UserRoleService {
     @InjectRepository(UserRole)
     private readonly usersRepository: Repository<UserRole>,
   ) {}
-  createUserRole(user_role:any) {
+  createUserRole(user_role:CreateUserRoleDto) {
     return this.usersRepository
       .createQueryBuilder('users')
       .insert()

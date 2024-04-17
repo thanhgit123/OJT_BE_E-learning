@@ -35,7 +35,7 @@ export class AuthService {
     };
   }
 
-  async signIn(userInfo) {
+  async signIn(userInfo:SignUpDto) {
     /** check thong tin user */
 
     const user = await this.userService.getUserByEmail(userInfo.phone);
@@ -45,7 +45,7 @@ export class AuthService {
 
     if (!user || !isMatch) {
       throw new HttpException(
-        'Incorrect email or password',
+        'Sai mật khẩu hoặc số điện thoại',
         HttpStatus.BAD_REQUEST,
       );
     }

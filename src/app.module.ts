@@ -18,16 +18,27 @@ import { WishListModule } from './modules/wish_list/wish_list.module';
 import { AuthModule } from './auth/auth.module';
 import { RolesModule } from './modules/roles/roles.module';
 
-
 @Module({
   imports: [
     TypeOrmModule.forRoot(config),
     MulterModule.register({
       dest: './uploads', // Đường dẫn tới thư mục lưu trữ file tải lên
-    })
-    ,
-    UsersModule,AuthModule,RolesModule,BlogModule,UserRoleModule,ChapterModule,CategoryModule,CommentModule,CoursesModule,DocLessonModule,EnrollCourseModule,LessonModule,TeacherModule,UserClipboardModule,WishListModule
-
+    }),
+    UsersModule,
+    AuthModule,
+    RolesModule,
+    BlogModule,
+    UserRoleModule,
+    ChapterModule,
+    CategoryModule,
+    CommentModule,
+    CoursesModule,
+    DocLessonModule,
+    EnrollCourseModule,
+    LessonModule,
+    TeacherModule,
+    UserClipboardModule,
+    WishListModule,
   ],
   controllers: [],
   providers: [],

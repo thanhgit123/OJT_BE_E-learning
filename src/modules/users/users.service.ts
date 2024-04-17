@@ -22,7 +22,7 @@ export class UsersService {
     });
   }
   
-  createUser(user) {
+  createUser(user:CreateUserDto) {
     return this.usersRepository
       .createQueryBuilder('users')
       .insert()

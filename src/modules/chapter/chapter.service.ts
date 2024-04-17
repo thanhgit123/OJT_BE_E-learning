@@ -22,24 +22,16 @@ export class ChapterService {
 
   async findAll() {
     const result = await this.courseRepository.find({ 
+      relations: ['lessons']
     });
     return result;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} chapter`;
+  async findOne(id: number) {
+    
   }
 
   update(id: number, updateChapterDto: UpdateChapterDto) {
     return `This action updates a #${id} chapter`;
-  }
-
-  async remove(id: number) {
-    return await this.courseRepository
-      .createQueryBuilder()
-      .delete()
-      .from(Chapter)
-      .where('id = :id', { id })
-      .execute();
   }
 }
