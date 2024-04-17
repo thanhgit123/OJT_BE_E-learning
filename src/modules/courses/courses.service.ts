@@ -23,7 +23,7 @@ export class CoursesService {
 
   async findAll() {
     const result = await this.courseRepository.find({
-      relations: ['teacher'],
+      relations: ['teacher', 'chapters'],
     });
     return result;
   }
@@ -33,7 +33,8 @@ export class CoursesService {
       .createQueryBuilder('course')
       .innerJoinAndSelect('course.teacher', 'teacher')
       .leftJoinAndSelect('course.chapters', 'chapters')
-      .where('course.id = :id', { id })
+      .leftJoinAndSelect('chapters.lessons', 'lessons')
+      .where('course.id = :id', { id }) 
       .getOne();
   }
 
@@ -41,12 +42,5 @@ export class CoursesService {
     return `This action updates a #${id} course`;
   }
 
-  async remove(id: number) {
-    return await this.courseRepository
-      .createQueryBuilder()
-      .delete()
-      .from(Course)
-      .where('id = :id', { id })
-      .execute();
-  }
+  
 }

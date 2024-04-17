@@ -19,11 +19,8 @@ export class TeacherService {
 
   async findAll() {
     const result =  await this.teacherRepository.find({
-      relations: ['course'],
-      // where: { course: { id: 1 } }
     })
     return result
-    
   }
 
   findOne(id: number) {
@@ -37,14 +34,5 @@ export class TeacherService {
     .set(updateTeacherDto)
     .where('id = :id', { id })
     .execute(); 
-  }
-
-  async remove(id: number) {
-    return  await this.teacherRepository
-    .createQueryBuilder()
-    .delete()
-    .from(Teacher)
-    .where('id = :id', { id })
-    .execute();
   }
 }

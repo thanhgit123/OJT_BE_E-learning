@@ -27,8 +27,5 @@ export class TeacherController {
     return this.teacherService.update(+id, updateTeacherDto);
   }
 
-  @Delete('delete/:id')
-  remove(@Param('id') id: string) {
-    return this.teacherService.remove(+id);
-  }
+ 
 }
