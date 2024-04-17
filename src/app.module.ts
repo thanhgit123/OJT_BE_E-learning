@@ -24,7 +24,7 @@ import { WishListModule } from './modules/wish_list/wish_list.module';
     MulterModule.register({
       dest: './uploads', // Đường dẫn tới thư mục lưu trữ file tải lên
     }),
-   
+    BlogModule,WishListModule,TeacherModule,UsersModule,CoursesModule,ChapterModule
   ],
   controllers: [],
   providers: [],
