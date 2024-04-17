@@ -10,6 +10,7 @@ import * as basicAuth from "express-basic-auth";
 import * as admin from 'firebase-admin';
 import { ConfigService } from '@nestjs/config';
 import { ServiceAccount } from 'firebase-admin';
+import { AuthController } from './auth/auth.controller';
 
 async function bootstrap() {
   const PORT = process.env.PORT || 9090;
