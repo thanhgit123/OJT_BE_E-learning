@@ -33,13 +33,21 @@ export class LessonService {
   }
 
    async update(id: number, updateLessonDto: UpdateLessonDto) {
+    // const {chapter_id} = updateLessonDto
     return await this.lessonRepository
       .createQueryBuilder()
       .update(Lesson)
-      .set({ ...updateLessonDto })
+      .set({ ...updateLessonDto})
       .where('id = :id', { id })
       .execute();
   }
 
-  
+  async remove(id: number) {
+    return await this.lessonRepository
+      .createQueryBuilder()
+      .delete()
+      .from(Lesson)
+      .where('id = :id', { id })
+      .execute();
+  }
 }
