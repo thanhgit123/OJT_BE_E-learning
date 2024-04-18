@@ -5,13 +5,13 @@ export class Comment {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ type: 'varchar', length: 255 })
+  @Column({ type: 'varchar', length: 255,default:'admin' })
   create_by: string;
 
   @Column({ type: 'date' })
   create_date: Date;
 
-  @Column({ type: 'varchar', length: 255 })
+  @Column({ type: 'varchar', length: 255, default: 'admin' })
   modify_by: string;
 
   @Column({ type: 'date' })

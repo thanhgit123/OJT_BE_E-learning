@@ -4,7 +4,7 @@ export class CreateChapterDto {
 
     
     create_date: Date;
-  
+
     modify_date: Date;
 
     @IsString()
