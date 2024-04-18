@@ -2,17 +2,11 @@ import { IsEmpty, IsNotEmpty, IsNumber, IsString } from "class-validator";
 
 export class CreateTeacherDto {
    
-    @IsString()
-    @IsNotEmpty()
+    
     create_date: Date;
     
-    @IsString()
-    @IsNotEmpty()
     modify_date: Date;
 
-    @IsNotEmpty()
-    @IsNumber()
-    voided: number;
 
     @IsString()
     @IsNotEmpty()
@@ -25,7 +19,7 @@ export class CreateTeacherDto {
 
     @IsString()
     @IsNotEmpty()
-     image: string;
+    image: string;
 
     
 }

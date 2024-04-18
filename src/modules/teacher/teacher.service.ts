@@ -9,11 +9,13 @@ import { InjectRepository } from '@nestjs/typeorm';
 export class TeacherService {
   constructor(@InjectRepository(Teacher) private readonly teacherRepository: Repository<Teacher>) {}
   async create(createTeacherDto: CreateTeacherDto) {
+    createTeacherDto.create_date = new Date(Date.now());
+    createTeacherDto.modify_date = new Date(Date.now());
     return await this.teacherRepository
     .createQueryBuilder()
     .insert()
     .into(Teacher)
-    .values(createTeacherDto)
+    .values(createTeacherDto) 
     .execute();
   }
 

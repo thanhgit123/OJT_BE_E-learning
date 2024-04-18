@@ -14,7 +14,7 @@ export class Course {
   @PrimaryGeneratedColumn({ type: 'bigint' })
   id: number;
 
-  @Column({ type: 'varchar', length: 255 })
+  @Column({ type: 'varchar', length: 255, })
   create_by: string;
 
   @Column({ type: 'date' })
@@ -32,7 +32,7 @@ export class Course {
   @Column({ type: 'varchar', length: 255 })
   title: string;
 
-  @Column({ type: 'bit',default:0 })
+  @Column({ type: 'bit', default: 0  })
   voided: number;
 
   @Column({ type: 'varchar', length: 255 })
