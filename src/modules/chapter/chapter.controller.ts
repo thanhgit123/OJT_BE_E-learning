@@ -17,7 +17,7 @@ export class ChapterController {
     return this.chapterService.findAll();
   }
 
-  @Get(':id')
+  @Get('getChapterByCourseId/:id')
   findOne(@Param('id') id: string) {
     return this.chapterService.findOne(+id);
   }
@@ -25,10 +25,5 @@ export class ChapterController {
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateChapterDto: UpdateChapterDto) {
     return this.chapterService.update(+id, updateChapterDto);
-  }
-
-  @Delete('delete/:id')
-  remove(@Param('id') id: string) {
-    return this.chapterService.remove(+id);
   }
 }

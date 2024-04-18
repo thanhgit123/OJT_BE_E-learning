@@ -2,12 +2,9 @@ import { IsNotEmpty, IsNumber, IsString } from "class-validator";
 
 export class CreateChapterDto {
 
-    @IsString()
-    @IsNotEmpty()
+    
     create_date: Date;
   
-    @IsString()
-    @IsNotEmpty()
     modify_date: Date;
 
     @IsString()
@@ -18,10 +15,7 @@ export class CreateChapterDto {
     @IsNotEmpty()
     title:string
 
-    @IsNumber()
+    @IsString()
     @IsNotEmpty()
-    voided: number
-
-   
-
+    course_id:string
 }

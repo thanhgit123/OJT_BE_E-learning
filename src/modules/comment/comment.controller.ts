@@ -7,12 +7,12 @@ import { UpdateCommentDto } from './dto/update-comment.dto';
 export class CommentController {
   constructor(private readonly commentService: CommentService) {}
 
-  @Post()
+  @Post('create')
   create(@Body() createCommentDto: CreateCommentDto) {
     return this.commentService.create(createCommentDto);
   }
 
-  @Get()
+  @Get('list')
   findAll() {
     return this.commentService.findAll();
   }
@@ -27,7 +27,7 @@ export class CommentController {
     return this.commentService.update(+id, updateCommentDto);
   }
 
-  @Delete(':id')
+  @Delete('delete/:id')
   remove(@Param('id') id: string) {
     return this.commentService.remove(+id);
   }

@@ -12,34 +12,32 @@ export class ChapterService {
     private readonly courseRepository: Repository<Chapter>,  
   ) {}
   async create(createChapterDto: CreateChapterDto) {
+    createChapterDto.create_date = new Date(Date.now());
+    createChapterDto.modify_date = new Date(Date.now());
+    const {course_id} = createChapterDto
     return await this.courseRepository
       .createQueryBuilder()
       .insert()
       .into(Chapter)
-      .values(createChapterDto)
+      .values({
+        ...createChapterDto,
+        course: course_id as any
+      })
       .execute();
   }
 
   async findAll() {
     const result = await this.courseRepository.find({ 
+      relations: ['lessons']
     });
     return result;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} chapter`;
+  async findOne(id: number) {
+    
   }
 
   update(id: number, updateChapterDto: UpdateChapterDto) {
     return `This action updates a #${id} chapter`;
-  }
-
-  async remove(id: number) {
-    return await this.courseRepository
-      .createQueryBuilder()
-      .delete()
-      .from(Chapter)
-      .where('id = :id', { id })
-      .execute();
   }
 }
