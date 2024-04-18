@@ -33,7 +33,6 @@ export class LessonService {
   }
 
    async update(id: number, updateLessonDto: UpdateLessonDto) {
-    // const {chapter_id} = updateLessonDto
     return await this.lessonRepository
       .createQueryBuilder()
       .update(Lesson)

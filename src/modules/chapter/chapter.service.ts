@@ -34,10 +34,20 @@ export class ChapterService {
   }
 
   async findOne(id: number) {
-    
+    // return await this.courseRepository
+    //   .createQueryBuilder('chapter')
+    //   .innerJoinAndSelect('chapter.course', 'course')
+    //   .innerJoinAndSelect('chapter.lessons', 'lessons')
+    //   .where('course.id = :id', { id })
+    //   .getOne();
   }
 
-  update(id: number, updateChapterDto: UpdateChapterDto) {
-    return `This action updates a #${id} chapter`;
+  async update(id: number, updateChapterDto: UpdateChapterDto) {
+    return await this.courseRepository
+      .createQueryBuilder()
+      .update(Chapter)
+      .set({ ...updateChapterDto, })  
+      .where('id = :id', { id })
+      .execute();
   }
 }
