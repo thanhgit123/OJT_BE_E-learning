@@ -1,17 +1,17 @@
 import { IsNotEmpty, IsNumber, IsString } from "class-validator";
 
 export class CreateLessonDto {
-    @IsString()
-    @IsNotEmpty()
-    create_date: Date;
+    // @IsString()
+    // @IsNotEmpty()
+    create_date: Date
   
-    @IsString()
-    @IsNotEmpty()
-    modify_date: Date;
+    // @IsString()
+    // @IsNotEmpty()
+    modify_date: Date
 
     @IsString()
     @IsNotEmpty()
-    description: string;
+    description: string
 
     @IsString()
     @IsNotEmpty()
@@ -23,6 +23,5 @@ export class CreateLessonDto {
 
     @IsNumber()
     @IsNotEmpty()
-    voided:number
-
+    chapter_id: number;
 }

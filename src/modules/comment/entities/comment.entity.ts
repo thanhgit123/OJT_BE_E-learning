@@ -26,6 +26,6 @@ export class Comment {
   @Column()
   user_id:number
 
-  @Column({type:'bit'})
+  @Column({type:'bit',default:0})
   voided:number
 }

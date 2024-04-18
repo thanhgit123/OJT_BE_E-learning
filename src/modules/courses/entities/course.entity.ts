@@ -43,7 +43,7 @@ export class Course {
 
   @ManyToOne(() => Teacher, (teacher) => teacher.course)
   @JoinColumn({ name: 'teacher_id' })
-  teacher: Teacher;
+  teacher_id: Teacher;
 
   @OneToMany(() => Chapter, (chapter) => chapter.course)
   chapters: Chapter[];

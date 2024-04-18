@@ -9,25 +9,36 @@ import { Repository } from 'typeorm';
 export class LessonService {
   constructor(@InjectRepository(Lesson) private readonly lessonRepository: Repository<Lesson>) {}
   async create(createLessonDto: CreateLessonDto) {
-    console.log(createLessonDto)
+    createLessonDto.create_date = new Date(Date.now());
+    createLessonDto.modify_date = new Date(Date.now());
+    const{chapter_id} = createLessonDto
     return await this.lessonRepository
       .createQueryBuilder()
       .insert()
       .into(Lesson)
-      .values(createLessonDto)
+      .values({
+        ...createLessonDto,
+        chapter: chapter_id as any
+      })  
       .execute();
   }
 
   async findAll() {
-    return await this.lessonRepository.find()
+    return await this.lessonRepository.find(
+    )
   }
 
   findOne(id: number) {
     return `This action returns a #${id} lesson`;
   }
 
-  update(id: number, updateLessonDto: UpdateLessonDto) {
-    return `This action updates a #${id} lesson`;
+   async update(id: number, updateLessonDto: UpdateLessonDto) {
+    return await this.lessonRepository
+      .createQueryBuilder()
+      .update(Lesson)
+      .set({ ...updateLessonDto })
+      .where('id = :id', { id })
+      .execute();
   }
 
   

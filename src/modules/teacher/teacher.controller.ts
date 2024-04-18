@@ -22,10 +22,10 @@ export class TeacherController {
     return this.teacherService.findOne(+id);
   }
 
-  @Put('update/:id')
-  update(@Param('id') id: string, @Body() updateTeacherDto: UpdateTeacherDto) {
-    return this.teacherService.update(+id, updateTeacherDto);
-  }
+  // @Put('update/:id')
+  // update(@Param('id') id: string, @Body() updateTeacherDto: UpdateTeacherDto) {
+  //   return this.teacherService.update(+id, updateTeacherDto);
+  // }
 
  
 }

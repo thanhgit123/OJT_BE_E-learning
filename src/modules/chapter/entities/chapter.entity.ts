@@ -32,7 +32,7 @@ export class Chapter {
   @Column({ type: 'varchar', length: 255 })
   title: string;
 
-  @Column({ type: 'bit' })
+  @Column({ type: 'bit', default: 0 })
   voided: number;
 
   @ManyToOne(() => Course, (course) => course.chapters)

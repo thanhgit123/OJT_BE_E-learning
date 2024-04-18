@@ -19,6 +19,7 @@ export class TeacherService {
 
   async findAll() {
     const result =  await this.teacherRepository.find({
+      
     })
     return result
   }
@@ -27,12 +28,12 @@ export class TeacherService {
     return `This action returns a #${id} teacher`;
   }
 
-  async update(id: number, updateTeacherDto: UpdateTeacherDto) {
-    return await this.teacherRepository
-    .createQueryBuilder()
-    .update(Teacher)
-    .set(updateTeacherDto)
-    .where('id = :id', { id })
-    .execute(); 
-  }
+  // async update(id: number, updateTeacherDto: UpdateTeacherDto) {
+  //   return await this.teacherRepository
+  //   .createQueryBuilder()
+  //   .update(Teacher)
+  //   .set(updateTeacherDto)
+  //   .where('id = :id', { id })
+  //   .execute(); 
+  // }
 }

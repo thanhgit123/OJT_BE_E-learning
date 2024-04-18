@@ -12,11 +12,17 @@ export class ChapterService {
     private readonly courseRepository: Repository<Chapter>,  
   ) {}
   async create(createChapterDto: CreateChapterDto) {
+    createChapterDto.create_date = new Date(Date.now());
+    createChapterDto.modify_date = new Date(Date.now());
+    const {course_id} = createChapterDto
     return await this.courseRepository
       .createQueryBuilder()
       .insert()
       .into(Chapter)
-      .values(createChapterDto)
+      .values({
+        ...createChapterDto,
+        course: course_id as any
+      })
       .execute();
   }
 

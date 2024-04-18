@@ -18,7 +18,7 @@ export class Teacher {
   @Column({ type: 'date' })
   modify_date: Date;
 
-  @Column({ type: 'bit' })
+  @Column({ type: 'bit',default:0 })
   voided: number;
 
   @Column({ type: 'varchar', length: 255 })
@@ -33,6 +33,6 @@ export class Teacher {
   @Column({ type: 'varchar', length: 255 })
   image: string;
 
-  @OneToMany(() => Course, (course) => course.teacher)
+  @OneToMany(() => Course, (course) => course.teacher_id)
   course: Course[];
 }
