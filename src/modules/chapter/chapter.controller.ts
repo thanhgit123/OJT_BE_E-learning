@@ -13,9 +13,9 @@ export class ChapterController {
     return this.chapterService.create(createChapterDto);
   }
 
-  @Get('list')
-  findAll() {
-    return this.chapterService.findAll();
+  @Get('list/:id')
+  findAll(@Param('id') id: string) {
+    return this.chapterService.findAll(+id);
   }
 
   @Get('getChapterByCourseId/:id')

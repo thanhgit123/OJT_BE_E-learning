@@ -26,10 +26,14 @@ export class ChapterService {
       .execute();
   }
 
-  async findAll() {
-    const result = await this.courseRepository.find({ 
-      relations: ['lessons']
-    });
+  async findAll(id:number) {
+    const result = await this.courseRepository
+      .createQueryBuilder('chapter')  
+      .leftJoinAndSelect('chapter.course', 'course')
+      .leftJoinAndSelect('chapter.lessons', 'lessons')
+      .select([ 'chapter', 'lessons'])
+      .where('course.id = :id', { id })
+      .getMany();
     return result;
   }
 
