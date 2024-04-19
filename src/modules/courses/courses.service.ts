@@ -49,6 +49,8 @@ export class CoursesService {
       .leftJoinAndSelect('course.chapters', 'chapters')
       .leftJoinAndSelect('chapters.lessons', 'lessons')
       .select([ 'chapters', 'course.title','lessons'])
+      .orderBy('chapters.id', 'ASC')
+      .addOrderBy('lessons.id', 'ASC')
       .where('course.id = :id', { id }) 
       .getOne();
   }

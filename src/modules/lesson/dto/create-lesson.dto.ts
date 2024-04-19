@@ -19,7 +19,7 @@ export class CreateLessonDto {
 
     @IsNumber()
     @IsNotEmpty()
-    chapter_id: number;
+    chapter_id: number
 
     @IsString()
     @IsNotEmpty()
