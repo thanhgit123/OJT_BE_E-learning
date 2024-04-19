@@ -43,6 +43,17 @@ export class CoursesService {
       .getOne();
   }
 
+ async findOneCourseAdmin(id: number) {
+    return await this.courseRepository
+      .createQueryBuilder('course')
+      .leftJoinAndSelect('course.chapters', 'chapters')
+      .leftJoinAndSelect('chapters.lessons', 'lessons')
+      .where('course.id = :id', { id }) 
+      .getOne();
+  }
+
+
+
   async update(id: number, updateCourseDto: UpdateCourseDto) {
     console.log(updateCourseDto)
     const {teacher_id} = updateCourseDto
@@ -54,5 +65,13 @@ export class CoursesService {
       .execute();
   }
 
-  
+  async searchCourse(searchValue: any) {
+    return await this.courseRepository
+      .createQueryBuilder('course')
+      .where('course.title like :searchValue', { searchValue: `%${searchValue}%` })
+      .orWhere('course.sub_description like :searchValue', { searchValue: `%${searchValue}%` })
+      .getMany();
+  }
+
+
 }

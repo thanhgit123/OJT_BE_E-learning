@@ -21,7 +21,7 @@ export class Lesson {
   @Column({type:'longtext'})
   description: string;
 
-  @Column({type:'varchar', length: 255})
+  @Column({type:'varchar', length: 255,default:"Rekkei"})
   resources:string
 
   @Column({type:'varchar', length: 255})
