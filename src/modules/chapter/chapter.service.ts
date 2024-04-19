@@ -29,8 +29,8 @@ export class ChapterService {
   async findAll(id:number) {
     const result = await this.courseRepository
       .createQueryBuilder('chapter')  
-      .leftJoinAndSelect('chapter.course', 'course')
-      .leftJoinAndSelect('chapter.lessons', 'lessons')
+      .innerJoinAndSelect('chapter.course', 'course')
+      .innerJoinAndSelect('chapter.lessons', 'lessons')
       .select([ 'chapter', 'lessons', 'course.title'])
       .where('course.id = :id', { id })
       .getMany();
