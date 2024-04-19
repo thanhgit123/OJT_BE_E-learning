@@ -24,6 +24,7 @@ export class WishListService {
     return 'Thêm thành công';
   }
 
+  //Lay theo user_id cua user
   async findAll(id:number) {
     return await this.wishListRepo.createQueryBuilder("wish_list")
     .innerJoinAndSelect("wish_list.user", "users")

@@ -1,4 +1,5 @@
 import { Chapter } from 'src/modules/chapter/entities/chapter.entity';
+import { CourseMy } from 'src/modules/course_my/entities/course_my.entity';
 import { Teacher } from 'src/modules/teacher/entities/teacher.entity';
 import { WishList } from 'src/modules/wish_list/entities/wish_list.entity';
 import {
@@ -51,4 +52,7 @@ export class Course {
 
   @OneToMany(() => WishList, (item) => item.course)
   wishList: WishList;
+
+  @OneToMany(() => CourseMy, (item) => item.course)
+  courseMy: CourseMy;
 }

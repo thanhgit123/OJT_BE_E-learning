@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 import { Blog } from 'src/modules/blog/entities/blog.entity';
 import { Chapter } from 'src/modules/chapter/entities/chapter.entity';
+import { CourseMy } from 'src/modules/course_my/entities/course_my.entity';
 import { Course } from 'src/modules/courses/entities/course.entity';
 import { Teacher } from 'src/modules/teacher/entities/teacher.entity';
 import { User } from 'src/modules/users/entities/user.entity';
@@ -19,8 +20,8 @@ const config: MysqlConnectionOptions = {
   password: process.env.DB_PASSWORD || 'password',
   type: 'mysql',
   database: process.env.DB_NAME || 'database-name',
-  entities: [Teacher, Course,Chapter,Blog,User,WishList],
-  synchronize: false,
+  entities: [Teacher, Course,Chapter,Blog,User,WishList,CourseMy],
+  synchronize:true,
   namingStrategy: new SnakeNamingStrategy(),
 };
 

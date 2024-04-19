@@ -1,4 +1,5 @@
 import { Blog } from "src/modules/blog/entities/blog.entity";
+import { CourseMy } from "src/modules/course_my/entities/course_my.entity";
 import { WishList } from "src/modules/wish_list/entities/wish_list.entity";
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
@@ -41,5 +42,8 @@ export class User {
     blog:Blog;
 
     @OneToMany(()=>WishList,(item)=>item.user)
-    wishList:WishList
+    wishList:WishList;
+
+    @OneToMany(()=>CourseMy,(item)=>item.user)
+    courseMy:CourseMy
 }
