@@ -1,4 +1,5 @@
 import { IsNotEmpty, IsNumber, IsString } from "class-validator";
+import { IsNull } from "typeorm";
 
 export class CreateLessonDto {
   
@@ -6,8 +7,6 @@ export class CreateLessonDto {
   
     modify_date: Date
 
-    @IsString()
-    @IsNotEmpty()
     description: string
 
     @IsString()
@@ -21,4 +20,8 @@ export class CreateLessonDto {
     @IsNumber()
     @IsNotEmpty()
     chapter_id: number;
+
+    @IsString()
+    @IsNotEmpty()
+    document:string
 }

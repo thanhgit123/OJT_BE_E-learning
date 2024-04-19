@@ -3,8 +3,8 @@ import { CreateLessonDto } from './create-lesson.dto';
 import { IsNotEmpty, IsString } from 'class-validator';
 
 export class UpdateLessonDto extends PartialType(CreateLessonDto) {
-    @IsString()
-    @IsNotEmpty()
+    
+    
     description: string
 
     @IsString()
@@ -14,4 +14,8 @@ export class UpdateLessonDto extends PartialType(CreateLessonDto) {
     @IsString()
     @IsNotEmpty()
     video:string
+
+    @IsString()
+    @IsNotEmpty()
+    document:string
 }

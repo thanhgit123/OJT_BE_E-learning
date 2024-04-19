@@ -6,13 +6,13 @@ export class Lesson {
   @PrimaryGeneratedColumn({ type: 'bigint' })
   id: number;
 
-  @Column({ type: 'varchar', length: 255 })
+  @Column({ type: 'varchar', length: 255 ,default:'admin'})
   create_by: string;
 
   @Column({ type: 'date' })
   create_date: Date;
 
-  @Column({ type: 'varchar', length: 255 })
+  @Column({ type: 'varchar', length: 255,default:'admin'})
   modify_by: string;
 
   @Column({ type: 'date' })
@@ -21,7 +21,7 @@ export class Lesson {
   @Column({type:'longtext'})
   description: string;
 
-  @Column({type:'varchar', length: 255,default:"Rekkei"})
+  @Column({type:'varchar', length: 255, default:'Rekkei'})
   resources:string
 
   @Column({type:'varchar', length: 255})
@@ -33,7 +33,7 @@ export class Lesson {
   @Column({type:'bit',default:1}) 
   voided:number
 
-  @Column({type:'longtext'})
+  @Column({type:'longtext',nullable:true})
   document:string
 
   @ManyToOne(() => Chapter, (chapter) => chapter.lessons)
