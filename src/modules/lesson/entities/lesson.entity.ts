@@ -18,7 +18,7 @@ export class Lesson {
   @Column({ type: 'date' })
   modify_date: Date;
 
-  @Column({type:'longtext'})
+  @Column({type:'longtext',default:'Add later'})
   description: string;
 
   @Column({type:'varchar', length: 255,default:"Rekkei"})
