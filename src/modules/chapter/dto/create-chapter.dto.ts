@@ -15,7 +15,7 @@ export class CreateChapterDto {
     @IsNotEmpty()
     title:string
 
-    @IsString()
+    @IsNumber()
     @IsNotEmpty()
-    course_id:string
+    course_id:number
 }

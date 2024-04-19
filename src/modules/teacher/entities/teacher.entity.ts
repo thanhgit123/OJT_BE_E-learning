@@ -18,7 +18,7 @@ export class Teacher {
   @Column({ type: 'date' })
   modify_date: Date;
 
-  @Column({ type: 'bit',default:0 })
+  @Column({ type: 'bit',default:1 })
   voided: number;
 
   @Column({ type: 'varchar', length: 255 })

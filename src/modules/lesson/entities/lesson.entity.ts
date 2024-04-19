@@ -30,7 +30,7 @@ export class Lesson {
   @Column({type:'varchar', length: 255})
   video:string
 
-  @Column({type:'bit',default:0}) 
+  @Column({type:'bit',default:1}) 
   voided:number
 
   @Column({type:'longtext'})
