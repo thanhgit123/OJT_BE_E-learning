@@ -31,7 +31,7 @@ export class ChapterService {
       .createQueryBuilder('chapter')  
       .leftJoinAndSelect('chapter.course', 'course')
       .leftJoinAndSelect('chapter.lessons', 'lessons')
-      .select([ 'chapter', 'lessons'])
+      .select([ 'chapter', 'lessons', 'course.title'])
       .where('course.id = :id', { id })
       .getMany();
     return result;

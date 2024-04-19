@@ -43,14 +43,15 @@ export class CoursesService {
       .getOne();
   }
 
-//  async findOneCourseAdmin(id: number) {
-//     return await this.courseRepository
-//       .createQueryBuilder('course')
-//       .innerJoinAndSelect('course.chapters', 'chapters')
-//       .innerJoinAndSelect('chapters.lessons', 'lessons')
-//       .where('course.id = :id', { id }) 
-//       .getOne();
-//   }
+ async findOneCourseAdmin(id: number) {
+    return await this.courseRepository
+      .createQueryBuilder('course')
+      .innerJoinAndSelect('course.chapters', 'chapters')
+      .innerJoinAndSelect('chapters.lessons', 'lessons')
+      .select([ 'lessons', 'chapters', 'course.title'])
+      .where('course.id = :id', { id }) 
+      .getOne();
+  }
 
 
 
