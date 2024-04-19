@@ -12,33 +12,53 @@ export class ChapterService {
     private readonly courseRepository: Repository<Chapter>,  
   ) {}
   async create(createChapterDto: CreateChapterDto) {
+    createChapterDto.create_date = new Date(Date.now());
+    createChapterDto.modify_date = new Date(Date.now());
+    const {course_id} = createChapterDto
     return await this.courseRepository
       .createQueryBuilder()
       .insert()
       .into(Chapter)
-      .values(createChapterDto)
+      .values({
+        ...createChapterDto,
+        course: course_id as any
+      })
       .execute();
   }
 
-  async findAll() {
-    const result = await this.courseRepository.find({ 
-    });
+  async findAll(id:number) {
+    const result = await this.courseRepository
+      .createQueryBuilder('chapter')  
+      .innerJoinAndSelect('chapter.course', 'course')
+      .innerJoinAndSelect('chapter.lessons', 'lessons')
+      .select([ 'chapter', 'lessons', 'course.title'])
+      .where('course.id = :id', { id })
+      .getMany();
     return result;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} chapter`;
+  async findOne(id: number) {
+    return await this.courseRepository
+      .createQueryBuilder('chapter')
+      .innerJoinAndSelect('chapter.course', 'course')
+      .innerJoinAndSelect('chapter.lessons', 'lessons')
+      .where('course.id = :id', { id })
+      .getOne();
   }
 
-  update(id: number, updateChapterDto: UpdateChapterDto) {
-    return `This action updates a #${id} chapter`;
+  async search(searchValue: any) {
+    console.log(searchValue)
+    return await this.courseRepository
+      .createQueryBuilder('chapter')
+      .where('chapter.title like :searchValue', { searchValue: `%${searchValue}%` })
+      .getMany();
   }
 
-  async remove(id: number) {
+  async update(id: number, updateChapterDto: UpdateChapterDto) {
     return await this.courseRepository
       .createQueryBuilder()
-      .delete()
-      .from(Chapter)
+      .update(Chapter)
+      .set({ ...updateChapterDto, })  
       .where('id = :id', { id })
       .execute();
   }

@@ -9,25 +9,20 @@ import { InjectRepository } from '@nestjs/typeorm';
 export class TeacherService {
   constructor(@InjectRepository(Teacher) private readonly teacherRepository: Repository<Teacher>) {}
   async create(createTeacherDto: CreateTeacherDto) {
+    createTeacherDto.create_date = new Date(Date.now());
+    createTeacherDto.modify_date = new Date(Date.now());
     return await this.teacherRepository
     .createQueryBuilder()
     .insert()
     .into(Teacher)
-    .values(createTeacherDto)
+    .values(createTeacherDto) 
     .execute();
   }
 
   async findAll() {
     const result =  await this.teacherRepository.find({
-      relations: ['course'],
-      // where: { course: { id: 1 } }
     })
     return result
-    
-  }
-
-  findOne(id: number) {
-    return `This action returns a #${id} teacher`;
   }
 
   async update(id: number, updateTeacherDto: UpdateTeacherDto) {
@@ -37,14 +32,5 @@ export class TeacherService {
     .set(updateTeacherDto)
     .where('id = :id', { id })
     .execute(); 
-  }
-
-  async remove(id: number) {
-    return  await this.teacherRepository
-    .createQueryBuilder()
-    .delete()
-    .from(Teacher)
-    .where('id = :id', { id })
-    .execute();
   }
 }

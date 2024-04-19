@@ -6,19 +6,19 @@ export class Teacher {
   @PrimaryGeneratedColumn({ type: 'bigint' })
   id: number;
 
-  @Column({ type: 'varchar', length: 255 })
+  @Column({ type: 'varchar', length: 255, default: 'admin' })
   create_by: string;
 
   @Column({ type: 'date' })
   create_date: Date;
 
-  @Column({ type: 'varchar', length: 255 })
+  @Column({ type: 'varchar', length: 255, default: 'admin' })
   modify_by: string;
 
   @Column({ type: 'date' })
   modify_date: Date;
 
-  @Column({ type: 'bit' })
+  @Column({ type: 'bit',default:1 })
   voided: number;
 
   @Column({ type: 'varchar', length: 255 })
@@ -33,6 +33,6 @@ export class Teacher {
   @Column({ type: 'varchar', length: 255 })
   image: string;
 
-  @OneToMany(() => Course, (course) => course.teacher)
+  @OneToMany(() => Course, (course) => course.teacher_id)
   course: Course[];
 }

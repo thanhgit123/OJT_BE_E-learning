@@ -12,18 +12,23 @@ export class CoursesService {
     private readonly courseRepository: Repository<Course>,
   ) {}
   async create(createCourseDto: CreateCourseDto) {
-    console.log(createCourseDto);
+    createCourseDto.create_date = new Date(Date.now());
+    createCourseDto.modify_date = new Date(Date.now());
+    const { teacher_id } = createCourseDto;
     return await this.courseRepository
       .createQueryBuilder()
       .insert()
       .into(Course)
-      .values(createCourseDto)
+      .values({
+        ...createCourseDto,
+        teacher_id: teacher_id as any,
+      })
       .execute();
   }
 
   async findAll() {
     const result = await this.courseRepository.find({
-      relations: ['teacher'],
+      relations: ['teacher_id', 'chapters'],
     });
     return result;
   }
@@ -31,22 +36,43 @@ export class CoursesService {
   async findOne(id: number) {
     return await this.courseRepository
       .createQueryBuilder('course')
-      .innerJoinAndSelect('course.teacher', 'teacher')
+      .innerJoinAndSelect('course.teacher_id', 'teacher')
       .leftJoinAndSelect('course.chapters', 'chapters')
-      .where('course.id = :id', { id })
+      .leftJoinAndSelect('chapters.lessons', 'lessons')
+      .where('course.id = :id', { id }) 
       .getOne();
   }
 
-  update(id: number, updateCourseDto: UpdateCourseDto) {
-    return `This action updates a #${id} course`;
+ async findOneCourseAdmin(id: number) {
+    return await this.courseRepository
+      .createQueryBuilder('course')
+      .leftJoinAndSelect('course.chapters', 'chapters')
+      .leftJoinAndSelect('chapters.lessons', 'lessons')
+      .select([ 'chapters', 'course.title','lessons'])
+      .where('course.id = :id', { id }) 
+      .getOne();
   }
 
-  async remove(id: number) {
+
+
+  async update(id: number, updateCourseDto: UpdateCourseDto) {
+    console.log(updateCourseDto)
+    const {teacher_id} = updateCourseDto
     return await this.courseRepository
       .createQueryBuilder()
-      .delete()
-      .from(Course)
-      .where('id = :id', { id })
+      .update(Course)
+      .set({ ...updateCourseDto, teacher_id: teacher_id as any })
+      .where('id = :id', { id })  
       .execute();
   }
+
+  async searchCourse(searchValue: any) {
+    return await this.courseRepository
+      .createQueryBuilder('course')
+      .where('course.title like :searchValue', { searchValue: `%${searchValue}%` })
+      .orWhere('course.sub_description like :searchValue', { searchValue: `%${searchValue}%` })
+      .getMany();
+  }
+
+
 }

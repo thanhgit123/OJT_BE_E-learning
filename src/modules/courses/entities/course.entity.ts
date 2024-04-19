@@ -16,13 +16,13 @@ export class Course {
   @PrimaryGeneratedColumn({ type: 'bigint' })
   id: number;
 
-  @Column({ type: 'varchar', length: 255 })
+  @Column({ type: 'varchar', length: 255,default: 'admin' })
   create_by: string;
 
   @Column({ type: 'date' })
   create_date: Date;
 
-  @Column({ type: 'varchar', length: 255 })
+  @Column({ type: 'varchar', length: 255 ,default: 'admin' })
   modify_by: string;
 
   @Column({ type: 'date' })
@@ -34,7 +34,7 @@ export class Course {
   @Column({ type: 'varchar', length: 255 })
   title: string;
 
-  @Column({ type: 'bit' })
+  @Column({ type: 'bit', default: 1  })
   voided: number;
 
   @Column({ type: 'varchar', length: 255 })
@@ -45,7 +45,7 @@ export class Course {
 
   @ManyToOne(() => Teacher, (teacher) => teacher.course)
   @JoinColumn({ name: 'teacher_id' })
-  teacher: Teacher;
+  teacher_id: Teacher;
 
   @OneToMany(() => Chapter, (chapter) => chapter.course)
   chapters: Chapter[];

@@ -1,15 +1,26 @@
 import { Injectable } from '@nestjs/common';
 import { CreateCommentDto } from './dto/create-comment.dto';
 import { UpdateCommentDto } from './dto/update-comment.dto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Comment } from './entities/comment.entity';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class CommentService {
-  create(createCommentDto: CreateCommentDto) {
-    return 'This action adds a new comment';
+  constructor(@InjectRepository(Comment) private readonly commentRepository: Repository<Comment>) {}
+ async create(createCommentDto: CreateCommentDto) {
+    createCommentDto.create_date = new Date(Date.now());
+    createCommentDto.modify_date = new Date(Date.now());
+    return await this.commentRepository
+      .createQueryBuilder()
+      .insert()
+      .into(Comment)
+      .values(createCommentDto)
+      .execute()
   }
 
-  findAll() {
-    return `This action returns all comment`;
+    async findAll() {
+    return await this.commentRepository.find()
   }
 
   findOne(id: number) {
@@ -20,7 +31,12 @@ export class CommentService {
     return `This action updates a #${id} comment`;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} comment`;
+  async remove(id: number) {
+    return await this.commentRepository 
+      .createQueryBuilder()
+      .delete()
+      .from(Comment)
+      .where('id = :id', { id })
+      .execute()
   }
 }

@@ -1,12 +1,9 @@
-import { IsEmpty, IsNotEmpty, IsNumber, IsString } from 'class-validator';
+import { IsNotEmpty, IsNumber, IsString } from 'class-validator';
 
 export class CreateCourseDto {
-  @IsString()
-  @IsNotEmpty()
+  
   create_date: Date;
 
-  @IsString()
-  @IsNotEmpty()
   modify_date: Date;
 
   @IsString()
@@ -17,9 +14,13 @@ export class CreateCourseDto {
   @IsString()
   title: string;
 
+  @IsString()
   @IsNotEmpty()
-  @IsNumber()
-  voided: number;
+  sub_description: string;
+
+  @IsString()
+  @IsNotEmpty()
+  description: string;
 
   @IsNotEmpty()
   @IsNumber()

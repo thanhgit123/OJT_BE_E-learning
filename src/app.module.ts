@@ -25,7 +25,17 @@ import { CourseMyModule } from './modules/course_my/course_my.module';
     MulterModule.register({
       dest: './uploads', // Đường dẫn tới thư mục lưu trữ file tải lên
     }),
-    BlogModule,WishListModule,TeacherModule,UsersModule,CoursesModule,ChapterModule,CourseMyModule
+
+    CoursesModule,
+    ChapterModule,
+    CommentModule,
+    LessonModule,
+    TeacherModule,
+    BlogModule,
+    WishListModule,
+    UsersModule,
+    CourseMyModule
+
   ],
   controllers: [],
   providers: [],
