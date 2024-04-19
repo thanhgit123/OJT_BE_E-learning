@@ -1,6 +1,7 @@
 import { IsNotEmpty, IsString } from "class-validator";
 
-export class CreateWishListDto {
+export class CreateCourseMyDto {
+    
     @IsNotEmpty()
     @IsString()
     user_id: string;
