@@ -11,7 +11,7 @@ export class User {
     @Column({ nullable: true })
     create_by: string;
 
-    @Column()
+    @Column({ type: 'timestamp', nullable: false, default: () => 'CURRENT_TIMESTAMP' })
     create_date: string;
   
     @Column({ nullable: true })
@@ -27,12 +27,12 @@ export class User {
     password: string;
   
     @Column() 
-    phone: number;
+    phone: string;
   
     @Column({ nullable: true }) 
     username:string;
   
-    @Column() 
+    @Column({ nullable: true }) 
     voided: number;
   
     @Column({ nullable: true }) 

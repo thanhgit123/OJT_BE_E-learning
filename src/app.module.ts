@@ -17,6 +17,7 @@ import { UserRoleModule } from './modules/user_role/user_role.module';
 import { UsersModule } from './modules/users/users.module';
 import { WishListModule } from './modules/wish_list/wish_list.module';
 import { CourseMyModule } from './modules/course_my/course_my.module';
+import { AuthModule } from './modules/auth/auth.module';
 
 
 @Module({
@@ -28,7 +29,7 @@ import { CourseMyModule } from './modules/course_my/course_my.module';
 
     CoursesModule,
     ChapterModule,
-    CommentModule,
+    AuthModule,
     LessonModule,
     TeacherModule,
     BlogModule,
