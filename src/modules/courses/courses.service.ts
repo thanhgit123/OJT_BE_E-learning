@@ -61,16 +61,14 @@ export class CoursesService {
   async findOneCourseAdmin(id: number) {
     return await this.courseRepository
       .createQueryBuilder('course')
-      .innerJoinAndSelect('course.chapters', 'chapters')
-      .innerJoinAndSelect('chapters.lessons', 'lessons')
-      .select(['chapters', 'course.title', 'lessons','lessons.chapter_id'])
+      .leftJoinAndSelect('course.chapters', 'chapters')
+      .leftJoinAndSelect('chapters.lessons', 'lessons')
+      .select(['chapters', 'course.title', 'lessons',])
       .orderBy('chapters.id', 'ASC')
       .addOrderBy('lessons.id', 'ASC')
       .where('course.id = :id', { id })
       .getOne();
   }
-
- 
 
   async update(id: number, updateCourseDto: UpdateCourseDto) {
     console.log(updateCourseDto);
