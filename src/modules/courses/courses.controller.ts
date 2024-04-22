@@ -33,8 +33,8 @@ export class CoursesController {
   }
 
   @Get('searchCourse')
-  searchCourse(@Query('key') searchValue: any,) {
-    return this.coursesService.searchCourse(searchValue);
+  searchCourse(@Query('key') searchValue: any,@Query('page') page: number, @Query('limit') limit: number) {
+    return this.coursesService.searchAndPaginateCourse(searchValue,page,limit);
   }
 
 
@@ -53,7 +53,5 @@ export class CoursesController {
   update(@Param('id') id: string, @Body() updateCourseDto: UpdateCourseDto) {
     return this.coursesService.update(+id, updateCourseDto);
   }
-
-
 
 }
