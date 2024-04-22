@@ -32,8 +32,8 @@ export class Chapter {
   @Column({ type: 'varchar', length: 255 })
   title: string;
 
-  @Column({ type: 'bit', default: 1 })
-  voided: number;
+  @Column({ type: 'boolean', default: false })
+  voided: boolean;
 
   @ManyToOne(() => Course, (course) => course.chapters)
   @JoinColumn({ name: 'course_id' })

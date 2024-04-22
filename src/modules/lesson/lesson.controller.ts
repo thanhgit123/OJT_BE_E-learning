@@ -17,7 +17,7 @@ export class LessonController {
     return this.lessonService.findAll();
   }
 
-  @Get(':id')
+  @Get('getLessonByChapter/:id')
   findOne(@Param('id') id: string) {
     return this.lessonService.findOne(+id);
   }

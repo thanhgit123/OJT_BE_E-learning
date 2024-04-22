@@ -24,12 +24,20 @@ export class LessonService {
   }
 
   async findAll() {
-    return await this.lessonRepository.find(
-    )
+    return await this.lessonRepository
+      .createQueryBuilder('lesson')
+      .leftJoinAndSelect('lesson.chapter', 'chapter')
+      .select([ 'lesson', 'chapter.id'])
+      .getMany();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} lesson`;
+  async findOne(id: number) {
+    return await this.lessonRepository
+    .createQueryBuilder('lesson')
+    .leftJoinAndSelect('lesson.chapter', 'chapter')
+    .select([ 'lesson', 'chapter.id'])
+    .where('chapter.id = :id', { id })
+    .getMany()
   }
 
    async update(id: number, updateLessonDto: UpdateLessonDto) {

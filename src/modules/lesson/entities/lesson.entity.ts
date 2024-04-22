@@ -30,15 +30,15 @@ export class Lesson {
   @Column({type:'varchar', length: 255})
   video:string
 
-  @Column({type:'bit',default:1}) 
-  voided:number
+  @Column({ type: 'boolean', default: false })
+  voided: boolean;
 
   @Column({type:'longtext',nullable:true})
   document:string
 
   @ManyToOne(() => Chapter, (chapter) => chapter.lessons)
   @JoinColumn({ name: 'chapter_id' })
-  chapter: Chapter[];
+  chapter: Chapter[]; 
 
 
 }
