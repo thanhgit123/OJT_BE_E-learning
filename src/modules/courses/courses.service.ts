@@ -63,7 +63,7 @@ export class CoursesService {
       .createQueryBuilder('course')
       .leftJoinAndSelect('course.chapters', 'chapters')
       .leftJoinAndSelect('chapters.lessons', 'lessons')
-      .select(['chapters', 'course.title', 'lessons',])
+      .select(['chapters', 'course.title', 'lessons'])
       .orderBy('chapters.id', 'ASC')
       .addOrderBy('lessons.id', 'ASC')
       .where('course.id = :id', { id })
@@ -81,29 +81,59 @@ export class CoursesService {
       .execute();
   }
 
-  async searchCourse(searchValue: any) {
-    return await this.courseRepository
-      .createQueryBuilder('course')
-      .where('course.title like :searchValue', {
-        searchValue: `%${searchValue}%`,
-      })
-      .orWhere('course.sub_description like :searchValue', {
-        searchValue: `%${searchValue}%`,
-      })
-      .orWhere('course.description like :searchValue', {
-        searchValue: `%${searchValue}%`,
-      })
-      .getMany();
-  }
+  // async searchCourse(searchValue: any) {
+  //   return await this.courseRepository
+  //     .createQueryBuilder('course')
+  //     .leftJoinAndSelect('course.teacher_id', 'teacher')
+  //     .where('course.title like :searchValue', {
+  //       searchValue: `%${searchValue}%`,
+  //     })
+  //     .orWhere('course.sub_description like :searchValue', {
+  //       searchValue: `%${searchValue}%`,
+  //     })
+  //     .orWhere('course.description like :searchValue', {
+  //       searchValue: `%${searchValue}%`,
+  //     })
+  //     .getMany();
+  // }
 
   async paginationCourse(page: number, limit: number) {
     const result = await this.courseRepository
       .createQueryBuilder('course')
+      .leftJoinAndSelect('course.teacher_id', 'teacher')
       .offset((page - 1) * limit)
       .limit(limit)
       .getMany();
     const total = await this.courseRepository.count();
     const totalPage = Math.ceil(total / limit);
-    return { data: result,itemByPage:+limit, total: totalPage };
+    return {
+      data: result,
+      itemByPage: +limit,
+      total: totalPage,
+      totalItem: total,
+    };
+  }
+
+  async searchAndPaginateCourse(searchValue: any, page: number, limit: number) {
+    const offset = (page - 1) * limit;
+    const result = await this.courseRepository
+        .createQueryBuilder('course')
+        .leftJoinAndSelect('course.teacher_id', 'teacher')
+        .where('course.title like :searchValue', {
+          searchValue: `%${searchValue}%`,
+        })
+        .offset(offset)
+        .limit(limit)
+        .getMany()
+        
+      const total = await this.courseRepository.count();
+      const totalPage = Math.ceil(total / limit);
+
+    return {
+      data: result,
+      itemByPage: +limit,
+      total: totalPage,
+      courseTotal: total,
+    };
   }
 }
