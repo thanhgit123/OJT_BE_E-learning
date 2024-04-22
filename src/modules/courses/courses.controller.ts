@@ -37,14 +37,15 @@ export class CoursesController {
     return this.coursesService.searchCourse(searchValue);
   }
 
+
+  @Get('findCourseByIdAdmin/:id')
+  findOneCourseAdminByid(@Param('id') id: number) {
+    return this.coursesService.findOneCourseAdmin(+id);
+  }
+
   @Get('findCourseById/:id')
   findOne(@Param('id') id: string) {
     return this.coursesService.findOne(+id);
-  }
-
-  @Get('findCourseByIdAdmin/:id')
-  findOneCourseAdmin(@Param('id') id: string) {
-    return this.coursesService.findOneCourseAdmin(+id);
   }
 
 
