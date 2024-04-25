@@ -8,17 +8,13 @@ import { LessonModule } from './modules/lesson/lesson.module';
 import { TeacherModule } from './modules/teacher/teacher.module';
 import { UsersModule } from './modules/users/users.module';
 import { AuthModule } from './modules/auth/auth.module';
-
-
 @Module({
   imports: [
     TypeOrmModule.forRoot(config),
     MulterModule.register({
       dest: './uploads', // Đường dẫn tới thư mục lưu trữ file tải lên
     }),
-
     UsersModule, TeacherModule, LessonModule, CoursesModule,ChapterModule, AuthModule
-
   ],
   controllers: [],
   providers: [],
