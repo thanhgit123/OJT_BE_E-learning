@@ -14,7 +14,12 @@ import { AuthModule } from './modules/auth/auth.module';
     MulterModule.register({
       dest: './uploads', // Đường dẫn tới thư mục lưu trữ file tải lên
     }),
-    UsersModule, TeacherModule, LessonModule, CoursesModule,ChapterModule, AuthModule
+    UsersModule,
+    TeacherModule,
+    LessonModule,
+    CoursesModule,
+    ChapterModule,
+    AuthModule,
   ],
   controllers: [],
   providers: [],
