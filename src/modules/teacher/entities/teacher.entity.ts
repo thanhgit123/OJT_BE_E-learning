@@ -33,6 +33,6 @@ export class Teacher {
   @Column({ type: 'varchar', length: 255 })
   image: string;
 
-  @OneToMany(() => Course, (course) => course.teacher_id)
+  @OneToMany(() => Course, (course) => course.teacher)
   course: Course[];
 }
