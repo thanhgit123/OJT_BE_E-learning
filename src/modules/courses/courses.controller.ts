@@ -29,14 +29,13 @@ export class CoursesController {
 
   @Get('PaginationCourse')
   paginationCourse(@Query('page') page: number, @Query('limit') limit: number) {
-      return this.coursesService.paginationCourse(+page, limit);
+    return this.coursesService.paginationCourse(+page, limit);
   }
 
   @Get('searchCourse')
-  searchCourse(@Query('key') searchValue: any,@Query('page') page: number, @Query('limit') limit: number) {
-    return this.coursesService.searchAndPaginateCourse(searchValue,page,limit);
+  searchCourse(@Query('key') searchValue: any) {
+    return this.coursesService.searchCourse(searchValue);
   }
-
 
   @Get('findCourseByIdAdmin/:id')
   findOneCourseAdminByid(@Param('id') id: number) {
@@ -48,10 +47,8 @@ export class CoursesController {
     return this.coursesService.findOne(+id);
   }
 
-
   @Put('update/:id')
   update(@Param('id') id: string, @Body() updateCourseDto: UpdateCourseDto) {
     return this.coursesService.update(+id, updateCourseDto);
   }
-
 }

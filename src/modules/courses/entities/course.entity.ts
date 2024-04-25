@@ -1,7 +1,5 @@
 import { Chapter } from 'src/modules/chapter/entities/chapter.entity';
-import { CourseMy } from 'src/modules/course_my/entities/course_my.entity';
 import { Teacher } from 'src/modules/teacher/entities/teacher.entity';
-import { WishList } from 'src/modules/wish_list/entities/wish_list.entity';
 import {
   Column,
   Entity,
@@ -45,9 +43,9 @@ export class Course {
 
   @ManyToOne(() => Teacher, (teacher) => teacher.course)
   @JoinColumn({ name: 'teacher_id' })
-  teacher_id: Teacher;
+  teacher: Teacher;
 
   @OneToMany(() => Chapter, (chapter) => chapter.course)
   chapters: Chapter[];
-  
+
 }
