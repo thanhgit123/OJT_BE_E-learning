@@ -47,5 +47,4 @@ export class Course {
 
   @OneToMany(() => Chapter, (chapter) => chapter.course)
   chapters: Chapter[];
-
 }
