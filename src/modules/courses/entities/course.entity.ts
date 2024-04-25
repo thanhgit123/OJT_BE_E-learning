@@ -49,10 +49,5 @@ export class Course {
 
   @OneToMany(() => Chapter, (chapter) => chapter.course)
   chapters: Chapter[];
-
-  @OneToMany(() => WishList, (item) => item.course)
-  wishList: WishList;
-
-  @OneToMany(() => CourseMy, (item) => item.course)
-  courseMy: CourseMy;
+  
 }

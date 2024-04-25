@@ -28,8 +28,8 @@ const config: MysqlConnectionOptions = {
   type: 'mysql',
   database: process.env.DB_NAME || 'database-name',
 
-  entities: [Teacher, Course, Chapter,Lesson,Comment,Blog,User,WishList,CourseMy],
-  synchronize: false,
+  entities: [Teacher, Course, Chapter,Lesson,User],
+  synchronize: true,
 
   namingStrategy: new SnakeNamingStrategy(),
 };

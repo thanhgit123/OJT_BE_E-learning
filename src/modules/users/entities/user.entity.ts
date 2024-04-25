@@ -1,6 +1,4 @@
-import { Blog } from "src/modules/blog/entities/blog.entity";
-import { CourseMy } from "src/modules/course_my/entities/course_my.entity";
-import { WishList } from "src/modules/wish_list/entities/wish_list.entity";
+import { Role } from "src/constant/enum";
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity({name:'users'})
@@ -8,42 +6,34 @@ export class User {
     @PrimaryGeneratedColumn()
     id: number;
   
-    @Column({ nullable: true })
+    @Column({ type: 'varchar', length: 255,default: 'admin' })
     create_by: string;
-
-    @Column()
-    create_date: string;
   
-    @Column({ nullable: true })
-    modify_date: string;
+    @Column({ type: 'date' })
+    create_date: Date;
   
-    @Column()
+    @Column({ type: 'varchar', length: 255 ,default: 'admin' })
+    modify_by: string;
+  
+    @Column({ type: 'date' })
+    modify_date: Date;
+  
+    @Column({type:'varchar', length: 50})
     full_name: string;
   
-    @Column({ nullable: true })
-    is_active: number;
+    @Column({ type:'boolean', default: true })
+    is_active: boolean;
   
-    @Column()
+    @Column({type:'varchar', length: 255})
     password: string;
   
-    @Column() 
-    phone: number;
+    @Column({type:'varchar', length: 15,}) 
+    phone: string;
   
-    @Column({ nullable: true }) 
-    username:string;
+    @Column({type:'enum', enum: Role, default: Role.USER})
+    role: Role;
   
-    @Column() 
-    voided: number;
+    @Column({type:'boolean', default: false}) 
+    voided: boolean;
   
-    @Column({ nullable: true }) 
-    active: number;
-  
-    @OneToMany(()=>Blog,(item)=>item.user)
-    blog:Blog;
-
-    @OneToMany(()=>WishList,(item)=>item.user)
-    wishList:WishList;
-
-    @OneToMany(()=>CourseMy,(item)=>item.user)
-    courseMy:CourseMy
 }

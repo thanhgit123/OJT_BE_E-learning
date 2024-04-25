@@ -17,6 +17,7 @@ import { UserRoleModule } from './modules/user_role/user_role.module';
 import { UsersModule } from './modules/users/users.module';
 import { WishListModule } from './modules/wish_list/wish_list.module';
 import { CourseMyModule } from './modules/course_my/course_my.module';
+import { AuthModule } from './modules/auth/auth.module';
 
 
 @Module({
@@ -26,16 +27,7 @@ import { CourseMyModule } from './modules/course_my/course_my.module';
       dest: './uploads', // Đường dẫn tới thư mục lưu trữ file tải lên
     }),
 
-    CoursesModule,
-    ChapterModule,
-    CommentModule,
-    LessonModule,
-    TeacherModule,
-    BlogModule,
-    WishListModule,
-    UsersModule,
-    CourseMyModule
-
+    UsersModule, TeacherModule, LessonModule, CoursesModule,ChapterModule, AuthModule
   ],
   controllers: [],
   providers: [],
