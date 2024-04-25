@@ -19,11 +19,11 @@ const config: MysqlConnectionOptions = {
   type: 'mysql',
   database: process.env.DB_NAME || 'database-name',
 
+
   entities: [
     User,Teacher,Lesson, Course, Chapter
   ],
   synchronize: true,
-
   namingStrategy: new SnakeNamingStrategy(),
 };
 

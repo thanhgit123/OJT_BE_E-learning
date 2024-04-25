@@ -7,6 +7,9 @@ import { ChapterModule } from './modules/chapter/chapter.module';
 import { LessonModule } from './modules/lesson/lesson.module';
 import { TeacherModule } from './modules/teacher/teacher.module';
 import { UsersModule } from './modules/users/users.module';
+
+
+
 import { AuthModule } from './modules/auth/auth.module';
 
 
@@ -18,7 +21,6 @@ import { AuthModule } from './modules/auth/auth.module';
     }),
 
     UsersModule, TeacherModule, LessonModule, CoursesModule,ChapterModule, AuthModule
-
   ],
   controllers: [],
   providers: [],
