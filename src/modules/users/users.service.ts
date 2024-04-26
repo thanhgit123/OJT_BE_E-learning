@@ -54,7 +54,6 @@ export class UsersService {
       where: { id: body.id },
     })
     findUser.is_active = body.is_active
-    
     try {
       const result = await this.userRepository.update(body.id, {
         is_active: body.is_active,
@@ -64,5 +63,14 @@ export class UsersService {
       console.log(error)
     }
   
+  }
+
+  async searchUser(searchValue: string) {
+      const result = await this.userRepository
+        .createQueryBuilder('user')
+        .where('user.full_name like :searchValue', { searchValue: `%${searchValue}%` })
+        .orWhere('user.phone like :searchValue', { searchValue: `%${searchValue}%` })
+        .getMany();
+    return result
   }
 }
