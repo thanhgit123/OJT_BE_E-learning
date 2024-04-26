@@ -19,7 +19,7 @@ export class UsersService {
     @InjectRepository(User) private readonly userRepository: Repository<User>,
   ) {}
 
-  async findAll() {
+ async findAll() {
     return await this.userRepository.find();
   }
 
