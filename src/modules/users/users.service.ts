@@ -49,5 +49,20 @@ export class UsersService {
     return result;
   }
 
-
+  async updateStatus(body: UpdateStatusDto) {
+    const findUser = await this.userRepository.findOne({
+      where: { id: body.id },
+    })
+    findUser.is_active = body.is_active
+    
+    try {
+      const result = await this.userRepository.update(body.id, {
+        is_active: body.is_active,
+      });
+      return result;
+    } catch (error) {
+      console.log(error)
+    }
+  
+  }
 }

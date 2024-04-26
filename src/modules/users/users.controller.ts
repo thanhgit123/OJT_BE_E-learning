@@ -19,6 +19,15 @@ export class UsersController {
     return await this.usersService.findUserByPhone(phone);
   }
 
- 
+  @Put('updateStatus')
+  @HttpCode(200)
+  async updateStatus(@Body() body: UpdateStatusDto) {
+    const result =  await this.usersService.updateStatus(body);
+    return{
+      statusCode: 200,
+      message: "Update status successfully",
+      data: body
+    }
+  }
  
 }
