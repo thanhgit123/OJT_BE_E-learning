@@ -62,7 +62,6 @@ export class UsersService {
     } catch (error) {
       console.log(error)
     }
-  
   }
 
   async searchUser(searchValue: string) {
