@@ -1,3 +1,4 @@
+import { ProgressModule } from './modules/progress/progress.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Module } from '@nestjs/common';
 import config from 'ormconfig';
@@ -19,9 +20,9 @@ import { WishListModule } from './modules/wish_list/wish_list.module';
 import { CourseMyModule } from './modules/course_my/course_my.module';
 import { AuthModule } from './modules/auth/auth.module';
 
-
 @Module({
   imports: [
+    ProgressModule,
     TypeOrmModule.forRoot(config),
     MulterModule.register({
       dest: './uploads', // Đường dẫn tới thư mục lưu trữ file tải lên
@@ -35,8 +36,7 @@ import { AuthModule } from './modules/auth/auth.module';
     BlogModule,
     WishListModule,
     UsersModule,
-    CourseMyModule
-
+    CourseMyModule,
   ],
   controllers: [],
   providers: [],

@@ -14,6 +14,7 @@ import { User } from 'src/modules/users/entities/user.entity';
 import { WishList } from 'src/modules/wish_list/entities/wish_list.entity';
 
 import { MysqlConnectionOptions } from 'typeorm/driver/mysql/MysqlConnectionOptions';
+import { Progress } from 'src/modules/progress/entities/progress.entity';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 require('dotenv').config();
@@ -24,12 +25,23 @@ const config: MysqlConnectionOptions = {
   host: process.env.DB_HOST || 'localhost',
   port: +process.env.DB_PORT || 3306,
   username: process.env.DB_USERNAME || 'root',
-  password: process.env.DB_PASSWORD || 'password',
+  password: process.env.DB_PASSWORD || '250123',
   type: 'mysql',
-  database: process.env.DB_NAME || 'database-name',
+  database: process.env.DB_NAME || 'e-learning',
 
-  entities: [Teacher, Course, Chapter,Lesson,Comment,Blog,User,WishList,CourseMy],
-  synchronize: false,
+  entities: [
+    Teacher,
+    Course,
+    Chapter,
+    Lesson,
+    Comment,
+    Blog,
+    User,
+    WishList,
+    CourseMy,
+    Progress,
+  ],
+  synchronize: true,
 
   namingStrategy: new SnakeNamingStrategy(),
 };
