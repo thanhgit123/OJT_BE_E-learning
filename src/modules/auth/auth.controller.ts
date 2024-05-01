@@ -9,7 +9,6 @@ import { DataToken } from "src/interfaces/data-token.interface";
 
 @Controller('auth')
 export class AuthController {
-
     constructor(
         private readonly userService: UsersService ,
         private readonly jwtService: JwtService
