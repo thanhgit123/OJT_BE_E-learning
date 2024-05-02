@@ -1,5 +1,6 @@
 import { Transform } from "class-transformer";
 import { IsEmail, IsEnum, IsNotEmpty, IsString, Length } from "class-validator"
+
 import { Role } from "src/constant/enum";
 
 export class LoginDto {
@@ -14,4 +15,5 @@ export class LoginDto {
     password: string;
 
     
+
 }

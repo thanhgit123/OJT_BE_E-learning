@@ -19,6 +19,7 @@ export class CoursesController {
 
   @Post('create')
   create(@Body() createCourseDto: CreateCourseDto) {
+    console.log(createCourseDto);
     return this.coursesService.create(createCourseDto);
   }
 
@@ -33,8 +34,18 @@ export class CoursesController {
   }
 
   @Get('searchCourse')
-  searchCourse(@Query('key') searchValue: any) {
-    return this.coursesService.searchCourse(searchValue);
+
+  searchCourse(
+    @Query('key') searchValue: any,
+    @Query('page') page: number,
+    @Query('limit') limit: number,
+  ) {
+    return this.coursesService.searchAndPaginateCourse(
+      searchValue,
+      page,
+      limit,
+    );
+
   }
 
   @Get('findCourseByIdAdmin/:id')
@@ -44,6 +55,7 @@ export class CoursesController {
 
   @Get('findCourseById/:id')
   findOne(@Param('id') id: string) {
+    console.log(id);
     return this.coursesService.findOne(+id);
   }
 

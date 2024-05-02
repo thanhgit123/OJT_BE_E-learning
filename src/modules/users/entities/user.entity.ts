@@ -8,6 +8,7 @@ export class User {
   
     @Column({ type: 'varchar', length: 255,default: 'admin' })
     create_by: string;
+
   
     @Column({ type: 'date' })
     create_date: Date;
@@ -27,13 +28,17 @@ export class User {
     @Column({type:'varchar', length: 255})
     password: string;
   
+
     @Column({type:'varchar', length: 15,}) 
+
     phone: string;
   
     @Column({type:'enum', enum: Role, default: Role.USER})
     role: Role;
   
+
     @Column({type:'boolean', default: false}) 
     voided: boolean;
+
   
 }

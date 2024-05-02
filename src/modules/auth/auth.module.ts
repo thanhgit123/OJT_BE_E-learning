@@ -1,3 +1,4 @@
+
 import { Module } from "@nestjs/common";
 import { AuthService } from "./auth.service";
 import { JwtModule, JwtService } from '@nestjs/jwt';
@@ -12,6 +13,7 @@ import { AuthController } from "./auth.controller";
             secret: JWT_CONFIG.ACCESS_KEY,
             signOptions: { expiresIn: JWT_CONFIG.ACCESS_TIME }
         }),
+
 
     ],
     controllers: [AuthController],

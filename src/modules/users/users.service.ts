@@ -1,3 +1,4 @@
+
 import {
   BadRequestException,
   HttpStatus,
@@ -25,6 +26,7 @@ export class UsersService {
 
   async findUserByPhone(phone: string) {
     return await this.userRepository.findOne({ where: { phone: phone } });
+
   }
 
   async createNewUser(body: RegisterDto) {
