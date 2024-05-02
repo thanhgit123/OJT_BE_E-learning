@@ -30,7 +30,7 @@ export class CoursesService {
 
   async findAll() {
     const result = await this.courseRepository.find({
-      relations: ['teacher_id', 'chapters'],
+      relations: ['teacher', 'chapters'],
     });
     return result;
   }
@@ -38,7 +38,7 @@ export class CoursesService {
   async findOne(id: number) {
     return await this.courseRepository
       .createQueryBuilder('course')
-      .innerJoinAndSelect('course.teacher_id', 'teacher')
+      .innerJoinAndSelect('course.teacher', 'teacher')
       .leftJoinAndSelect('course.chapters', 'chapters')
       .leftJoinAndSelect('chapters.lessons', 'lessons')
       .select([
@@ -83,7 +83,7 @@ export class CoursesService {
   async searchCourse(searchValue: any) {
     return await this.courseRepository
       .createQueryBuilder('course')
-      .leftJoinAndSelect('course.teacher_id', 'teacher')
+      .leftJoinAndSelect('course.teacher', 'teacher')
       .where('course.title like :searchValue', {
         searchValue: `%${searchValue}%`,
       })
@@ -99,7 +99,7 @@ export class CoursesService {
   async paginationCourse(page: number, limit: number) {
     const result = await this.courseRepository
       .createQueryBuilder('course')
-      .leftJoinAndSelect('course.teacher_id', 'teacher')
+      .leftJoinAndSelect('course.teacher', 'teacher')
       .offset((page - 1) * limit)
       .limit(limit)
       .getMany();

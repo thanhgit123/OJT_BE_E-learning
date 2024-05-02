@@ -8,6 +8,7 @@ import { LessonModule } from './modules/lesson/lesson.module';
 import { TeacherModule } from './modules/teacher/teacher.module';
 import { UsersModule } from './modules/users/users.module';
 import { AuthModule } from './modules/auth/auth.module';
+import { ProgressModule } from './modules/progress/progress.module';
 @Module({
   imports: [
     TypeOrmModule.forRoot(config),
@@ -20,6 +21,7 @@ import { AuthModule } from './modules/auth/auth.module';
     CoursesModule,
     ChapterModule,
     AuthModule,
+    ProgressModule,
   ],
   controllers: [],
   providers: [],
