@@ -34,6 +34,7 @@ export class CoursesController {
   }
 
   @Get('searchCourse')
+
   searchCourse(
     @Query('key') searchValue: any,
     @Query('page') page: number,
@@ -44,6 +45,7 @@ export class CoursesController {
       page,
       limit,
     );
+
   }
 
   @Get('findCourseByIdAdmin/:id')

@@ -1,18 +1,20 @@
 
-import { Module, forwardRef } from "@nestjs/common";
+import { Module } from "@nestjs/common";
 import { AuthService } from "./auth.service";
-import { AuthController } from "./auth.controller";
 import { JwtModule, JwtService } from '@nestjs/jwt';
-import { JWT_CONFIG } from '../../constant/constants/jwt.constant';
-import { UsersModule } from "../users/users.module";
+import { UsersModule } from '../users/users.module';
+import { JWT_CONFIG } from "src/constant/jwt.constant";
+import { AuthController } from "./auth.controller";
 
 @Module({
     imports: [
-        forwardRef(()=>UsersModule),
+        UsersModule,
         JwtModule.register({
-            secret: "asdasd",
-            signOptions: { expiresIn: "1d" }
+            secret: JWT_CONFIG.ACCESS_KEY,
+            signOptions: { expiresIn: JWT_CONFIG.ACCESS_TIME }
         }),
+
+
     ],
     controllers: [AuthController],
     providers: [AuthService],
