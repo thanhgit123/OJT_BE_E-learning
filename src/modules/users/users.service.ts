@@ -72,4 +72,20 @@ export class UsersService {
         .getMany();
     return result
   }
+
+  async paginationUser(page:number,limit:number){
+    const result = await this.userRepository
+      .createQueryBuilder('user')
+      .offset((page - 1) * limit)
+      .limit(limit)
+      .getMany();
+    const total = await this.userRepository.count();
+    const totalPage = Math.ceil(total / limit);
+    return {
+      data: result,
+      itemByPage: +limit,
+      total: totalPage,
+      totalItem: total,
+    }
+  }
 }

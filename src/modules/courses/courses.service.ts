@@ -30,7 +30,7 @@ export class CoursesService {
 
   async findAll() {
     const result = await this.courseRepository.find({
-      relations: ['teacher_id', 'chapters'],
+      relations: ['teacher', 'chapters'],
     });
     return result;
   }
