@@ -38,7 +38,7 @@ export class CoursesService {
   async findOne(id: number) {
     return await this.courseRepository
       .createQueryBuilder('course')
-      .innerJoinAndSelect('course.teacher_id', 'teacher')
+      .innerJoinAndSelect('course.teacher', 'teacher')
       .leftJoinAndSelect('course.chapters', 'chapters')
       .leftJoinAndSelect('chapters.lessons', 'lessons')
       .select([

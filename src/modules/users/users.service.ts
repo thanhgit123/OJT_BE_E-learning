@@ -30,7 +30,7 @@ export class UsersService {
   async createNewUser(body: RegisterDto) {
     const checkPhone = await this.findUserByPhone(body.phone);
     if (checkPhone) {
-      throw new BadRequestException('Phone already exists');
+      throw new BadRequestException('Số điện thoại đã tồn tại');
     }
     try {
       body.password = bcrypt.hashSync(body.password, bcrypt.genSaltSync());

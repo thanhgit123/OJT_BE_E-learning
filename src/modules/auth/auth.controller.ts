@@ -1,4 +1,4 @@
-import { BadRequestException, Body, Controller, HttpStatus, NotFoundException, Post, Req, UnauthorizedException } from "@nestjs/common";
+import { BadRequestException, Body, Controller, ForbiddenException, HttpStatus, NotFoundException, Post, Req, UnauthorizedException } from "@nestjs/common";
 import { JwtService } from "@nestjs/jwt";
 import { UsersService } from "../users/users.service";
 import { RegisterDto } from "./dto/register.dto";
@@ -24,15 +24,17 @@ export class AuthController {
         }
     }
 
+    
+
     @Post('login')
     async login(@Body() body:LoginDto) {
         const user = await this.userService.login(body);
         
     if(!user) {
-        throw new NotFoundException('Tài khoản không tồn tại ');
+        throw new NotFoundException('Sai số điện thoại hoặc mật khẩu');
       }
       if(!user.is_active){
-        throw new UnauthorizedException('Tài khoản đã bị khóa');
+        throw new ForbiddenException('Tài khoản đã bị khóa');
       }
   
       if(!bcrypt.compareSync(body.password, user.password)) {
@@ -47,7 +49,6 @@ export class AuthController {
         message: "Login successfully",
         data: {...user, accessToken, refreshToken }
       }
-
     }
 
     @Post('refresh_token')
