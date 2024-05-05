@@ -9,6 +9,8 @@ import { TeacherModule } from './modules/teacher/teacher.module';
 import { UsersModule } from './modules/users/users.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { ProgressModule } from './modules/progress/progress.module';
+import { JwtModule } from '@nestjs/jwt';
+import { JWT_CONFIG } from './constant/jwt.constant';
 @Module({
   imports: [
     TypeOrmModule.forRoot(config),
@@ -22,6 +24,10 @@ import { ProgressModule } from './modules/progress/progress.module';
     ChapterModule,
     AuthModule,
     ProgressModule,
+    JwtModule.register({
+      secret: JWT_CONFIG.ACCESS_KEY,
+      signOptions: { expiresIn: JWT_CONFIG.ACCESS_TIME },
+    }),
   ],
   controllers: [],
   providers: [],

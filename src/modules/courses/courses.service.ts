@@ -3,7 +3,7 @@ import { Injectable } from '@nestjs/common';
 import { CreateCourseDto } from './dto/create-course.dto';
 import { UpdateCourseDto } from './dto/update-course.dto';
 import { Course } from './entities/course.entity';
-import { Repository } from 'typeorm';
+import { Like, Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { skip } from 'node:test';
 
@@ -45,6 +45,7 @@ export class CoursesService {
         'chapters',
         'course.title',
         'course.image',
+        'course.description',
         'course.id',
         'lessons',
         'teacher.name',
@@ -70,30 +71,26 @@ export class CoursesService {
       .getOne();
   }
 
-  async update(id: number, updateCourseDto: UpdateCourseDto) {
-    const { teacher_id } = updateCourseDto;
-    return await this.courseRepository
-      .createQueryBuilder()
-      .update(Course)
-      .set({ ...updateCourseDto, teacher: teacher_id as any })
-      .where('id = :id', { id })
-      .execute();
+  async update(id: number, updateCourseDto: any) {
+    updateCourseDto.teacher = updateCourseDto.teacher_id;
+    delete updateCourseDto.teacher_id;
+    return await this.courseRepository.update(id, updateCourseDto);
   }
 
-  async searchCourse(searchValue: any) {
-    return await this.courseRepository
-      .createQueryBuilder('course')
-      .leftJoinAndSelect('course.teacher', 'teacher')
-      .where('course.title like :searchValue', {
-        searchValue: `%${searchValue}%`,
-      })
-      .orWhere('course.sub_description like :searchValue', {
-        searchValue: `%${searchValue}%`,
-      })
-      .orWhere('course.description like :searchValue', {
-        searchValue: `%${searchValue}%`,
-      })
-      .getMany();
+  async searchCourse(searchValue: string) {
+    const result = await this.courseRepository.find({
+      where: {
+        title: Like(`%${searchValue}%`),
+      },
+    });
+    const total = result.length;
+    const totalPage = Math.ceil(total / 6);
+    return {
+      data: result,
+      itemByPage: +6,
+      total: totalPage,
+      totalItem: total,
+    };
   }
 
   async paginationCourse(page: number, limit: number) {
