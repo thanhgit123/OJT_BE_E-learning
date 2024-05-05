@@ -30,7 +30,7 @@ export class UsersService {
   async createNewUser(body: RegisterDto) {
     const checkPhone = await this.findUserByPhone(body.phone);
     if (checkPhone) {
-      throw new BadRequestException('Phone already exists');
+      throw new BadRequestException('Số điện thoại đã tồn tại');
     }
     try {
       body.password = bcrypt.hashSync(body.password, bcrypt.genSaltSync());
@@ -71,5 +71,21 @@ export class UsersService {
         .orWhere('user.phone like :searchValue', { searchValue: `%${searchValue}%` })
         .getMany();
     return result
+  }
+
+  async paginationUser(page:number,limit:number){
+    const result = await this.userRepository
+      .createQueryBuilder('user')
+      .offset((page - 1) * limit)
+      .limit(limit)
+      .getMany();
+    const total = await this.userRepository.count();
+    const totalPage = Math.ceil(total / limit);
+    return {
+      data: result,
+      itemByPage: +limit,
+      total: totalPage,
+      totalItem: total,
+    }
   }
 }

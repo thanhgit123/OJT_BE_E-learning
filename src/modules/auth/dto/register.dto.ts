@@ -11,11 +11,13 @@ export class RegisterDto {
     full_name: string;
 
     @IsString()
-    @Matches(/((09|03|07|08|05)+([0-9]{8})\b)/ , { message: 'Phone not valid' })
+    @IsNotEmpty()
+    @Matches(/(\+84[3|5|7|8|9])+([0-9]{8,9})\b/ , { message: 'Số điện thoại không hợp lệ' })
     phone: string;
 
     @IsString()
     @IsNotEmpty()
+    @Matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/, { message: 'Sai định dạng mật khẩu' })
     password: string;
 
     

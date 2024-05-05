@@ -1,4 +1,4 @@
-import { BadRequestException, Body, Controller, HttpStatus, NotFoundException, Post, Req, UnauthorizedException } from "@nestjs/common";
+import { BadRequestException, Body, Controller, ForbiddenException, HttpStatus, NotFoundException, Post, Req, UnauthorizedException } from "@nestjs/common";
 import { JwtService } from "@nestjs/jwt";
 import { UsersService } from "../users/users.service";
 import { RegisterDto } from "./dto/register.dto";
@@ -10,7 +10,7 @@ import { DataToken } from "src/interfaces/data-token.interface";
 @Controller('auth')
 export class AuthController {
     constructor(
-        private readonly userService: UsersService ,
+        private readonly userService: UsersService,
         private readonly jwtService: JwtService
     ) { };
 
@@ -24,19 +24,21 @@ export class AuthController {
         }
     }
 
+    
+
     @Post('login')
     async login(@Body() body:LoginDto) {
         const user = await this.userService.login(body);
         
     if(!user) {
-        throw new NotFoundException('Account not found');
+        throw new NotFoundException('Sai số điện thoại hoặc mật khẩu');
       }
       if(!user.is_active){
-        throw new UnauthorizedException('Account not active');
+        throw new ForbiddenException('Tài khoản đã bị khóa');
       }
   
       if(!bcrypt.compareSync(body.password, user.password)) {
-        throw new UnauthorizedException('Wrong password');
+        throw new UnauthorizedException('Sai số điện thoại hoặc mật khẩu');
       }
 
       const [accessToken, refreshToken] = await this.generatesToken({ id: user.id, role: user.role });
@@ -47,7 +49,6 @@ export class AuthController {
         message: "Login successfully",
         data: {...user, accessToken, refreshToken }
       }
-
     }
 
     @Post('refresh_token')
