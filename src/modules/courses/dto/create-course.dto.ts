@@ -1,7 +1,6 @@
 import { IsNotEmpty, IsNumber, IsString } from 'class-validator';
 
 export class CreateCourseDto {
-  
   create_date: Date;
 
   modify_date: Date;
