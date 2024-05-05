@@ -15,7 +15,6 @@ import {
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { UpdateStatusDto } from './dto/update-status.dto';
-import { AuthGuard } from 'src/guards/auth.guards';
 import { RoleGuard } from 'src/shared/guard/auth.guard';
 import { Role } from 'src/constant/enum';
 import { Roles } from 'src/shared/decorators/role-decorator';
@@ -54,7 +53,7 @@ export class UsersController {
   async updateStatus(@Body() body: UpdateStatusDto) {
     const result = await this.usersService.updateStatus(body);
     return {
-      statusCode: HttpStatus.OK,  
+      statusCode: HttpStatus.OK,
       message: 'Update status successfully',
       data: body,
     };
