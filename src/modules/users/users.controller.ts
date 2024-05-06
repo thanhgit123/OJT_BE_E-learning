@@ -15,21 +15,16 @@ import {
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { UpdateStatusDto } from './dto/update-status.dto';
-import { RoleGuard } from 'src/shared/guard/auth.guard';
-import { Role } from 'src/constant/enum';
-import { Roles } from 'src/shared/decorators/role-decorator';
 import { AuthGuard } from 'src/guards/auth.guards';
+import { RoleGuard } from 'src/guards/role.guard';
 
-// @UseGuards(AuthGuard)
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
-  // request ->  middleware -> guard -> interceptor -> response
   @Get('getAllUser')
-  // @UseGuards(RoleGuard)
-  // @Roles(Role.ADMIN)
-  /* @UseGuards(AuthGuard) */
+  @UseGuards(RoleGuard)
+  // @UseGuards(AuthGuard)
   async findAllUser() {
     return await this.usersService.findAll();
   }

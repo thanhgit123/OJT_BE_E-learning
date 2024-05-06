@@ -1,20 +1,32 @@
-import { Injectable, CanActivate, ExecutionContext } from '@nestjs/common';
-import { Reflector } from '@nestjs/core';
-import { Observable } from 'rxjs';
+import {
+  Injectable,
+  CanActivate,
+  ExecutionContext,
+  UnauthorizedException,
+  ForbiddenException,
+} from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
 import { Role } from 'src/constant/enum';
 
 @Injectable()
-export class RolehGuard implements CanActivate {
-  constructor(private readonly reflector: Reflector) {}
+export class RoleGuard implements CanActivate {
+  constructor(private readonly jwtService: JwtService) {}
   canActivate(context: ExecutionContext): boolean {
-    const requiredRoles = this.reflector.getAllAndOverride<Role[]>(
-      'ROLES_KEY',
-      [context.getHandler(), context.getClass()],
-    );
-    if (!requiredRoles) {
-      return true;
+    const request = context.switchToHttp().getRequest();
+    const token = request.headers.authorization?.split(' ')[1];
+    if (!token) {
+      throw new UnauthorizedException();
     }
-    const { user } = context.switchToHttp().getRequest();
-    return requiredRoles.some((role) => user.roles?.includes(role));
+    try {
+      const decoded = this.jwtService.verify(token);
+      request.user = decoded;
+      const check = +decoded.role === +Role.ADMIN ? true : false;
+      if (!check) {
+        throw new ForbiddenException('Bạn không có quyền truy cập');
+      }
+      return check;
+    } catch (error) {
+      throw new ForbiddenException('Bạn không có quyền truy cập');
+    }
   }
 }
