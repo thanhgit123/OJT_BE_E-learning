@@ -3,18 +3,14 @@ import {
   CanActivate,
   ExecutionContext,
   UnauthorizedException,
+  ForbiddenException,
 } from '@nestjs/common';
-import { Reflector } from '@nestjs/core';
 import { JwtService } from '@nestjs/jwt';
-import { Observable } from 'rxjs';
 import { Role } from 'src/constant/enum';
 
 @Injectable()
-export class RolehGuard implements CanActivate {
-  constructor(
-    private readonly reflector: Reflector,
-    private readonly jwtService: JwtService,
-  ) {}
+export class RoleGuard implements CanActivate {
+  constructor(private readonly jwtService: JwtService) {}
   canActivate(context: ExecutionContext): boolean {
     const request = context.switchToHttp().getRequest();
     const token = request.headers.authorization?.split(' ')[1];
@@ -23,13 +19,14 @@ export class RolehGuard implements CanActivate {
     }
     try {
       const decoded = this.jwtService.verify(token);
-      if (decoded.role === 1) {
-        return true;
-      } else {
-        return false;
+      request.user = decoded;
+      const check = +decoded.role === +Role.ADMIN ? true : false;
+      if (!check) {
+        throw new ForbiddenException('Bạn không có quyền truy cập');
       }
+      return check;
     } catch (error) {
-      throw new UnauthorizedException();
+      throw new ForbiddenException('Bạn không có quyền truy cập');
     }
   }
 }
