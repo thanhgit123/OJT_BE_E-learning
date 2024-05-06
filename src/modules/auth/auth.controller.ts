@@ -25,13 +25,12 @@ export class AuthController {
     }
 
     
-
     @Post('login')
     async login(@Body() body:LoginDto) {
         const user = await this.userService.login(body);
         
     if(!user) {
-        throw new NotFoundException('Sai số điện thoại hoặc mật khẩu');
+        throw new NotFoundException('Tài khoản không tồn tại');
       }
       if(!user.is_active){
         throw new ForbiddenException('Tài khoản đã bị khóa');
@@ -41,13 +40,13 @@ export class AuthController {
         throw new UnauthorizedException('Sai số điện thoại hoặc mật khẩu');
       }
 
-      const [accessToken, refreshToken] = await this.generatesToken({ id: user.id, role: user.role });
+      const [accessToken, refreshToken] = await this.generatesToken({ id: user.id, role: user.role });  
       delete user.password;
 
       return {
         statusCode: HttpStatus.OK,
         message: "Login successfully",
-        data: {...user, accessToken, refreshToken }
+        data: {...user, accessToken, refreshToken}
       }
     }
 
@@ -58,10 +57,9 @@ export class AuthController {
         if (!token) {
             throw new UnauthorizedException("Missing token");
         }
-        const infoToken = await this.jwtService.verifyAsync(token, { secret: JWT_CONFIG.REFRESH_KEY });
+        const infoToken = await this.jwtService.verifyAsync(token, { secret: process.env.REFRESH_KEY });
         const { id, role } = infoToken;
         const [accessToken, refreshToken] = await this.generatesToken({ id, role });
-
         return {
             statusCode: HttpStatus.OK,
             message: "Refresh token successfully",
@@ -71,7 +69,7 @@ export class AuthController {
 
     private generatesToken = async (data:DataToken) => {
         const accessToken = await this.jwtService.signAsync(data);
-        const refreshToken = await this.jwtService.signAsync(data, { expiresIn: JWT_CONFIG.REFRESH_TIME, secret: JWT_CONFIG.REFRESH_KEY });
+        const refreshToken = await this.jwtService.signAsync(data, { expiresIn: process.env.REFRESH_TIME, secret: process.env.REFRESH_KEY });
         return [accessToken, refreshToken];
     }
     

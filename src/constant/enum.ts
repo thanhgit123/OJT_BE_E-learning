@@ -4,9 +4,9 @@ export enum UserRole {
   CUSTOMER 
 }
 
-export enum Role{
-  ADMIN,
-  USER
+export enum Role {
+  USER = 1,
+  ADMIN = 0
 }
 
 export enum UserGender{
