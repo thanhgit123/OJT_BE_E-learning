@@ -20,18 +20,27 @@ import { AuthGuard } from 'src/guards/auth.guards';
 @Controller('progress')
 export class ProgressController {
   constructor(private readonly progressService: ProgressService) {}
-  @Post('create')
-  create(@Body() createProgressDto: CreateProgressDto) {
-    console.log(createProgressDto);
-    return this.progressService.create(createProgressDto);
-  }
 
   @UseGuards(AuthGuard)
+  @Post('create')
+  create(@Body() createProgressDto: any, @Req() req: Request) {
+    const user: any = req.user;
+    const data = {
+      userId: +user.id,
+      lessionId: +createProgressDto.lesson_id,
+      courseId: +createProgressDto.course_id,
+      chapterId: +createProgressDto.chapter_id,
+      isCompleted: 1,
+      notes: 'không có',
+    };
+    return this.progressService.create(data);
+  }
+
   @Get('check/:id')
   async check(@Param('id') id: number, @Req() req: Request) {
     // logic lấy được  id  user  và id session
     /*  console.log(req.headers.authorization); */
-    const data = {
+    /* const data = {
       session: +id,
       userId: 4,
     };
@@ -40,7 +49,7 @@ export class ProgressController {
       return true;
     } else {
       return false;
-    }
+    } */
     /* return this.progressService.search(id); */
   }
 }

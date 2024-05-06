@@ -9,11 +9,19 @@ import {
 export class CreateProgressDto {
   @IsNumber()
   @IsNotEmpty()
-  user: number;
+  userId: number;
 
   @IsNotEmpty()
   @IsNumber()
-  session: number;
+  lessionId: number;
+
+  @IsNotEmpty()
+  @IsNumber()
+  courseId: number;
+
+  @IsNotEmpty()
+  @IsNumber()
+  chapterId: number;
 
   @IsNotEmpty()
   @IsNumber()

@@ -1,3 +1,5 @@
+import { Chapter } from 'src/modules/chapter/entities/chapter.entity';
+import { Course } from 'src/modules/courses/entities/course.entity';
 import { Lesson } from 'src/modules/lesson/entities/lesson.entity';
 import { User } from 'src/modules/users/entities/user.entity';
 import {
@@ -19,8 +21,16 @@ export class Progress {
   user: User;
 
   @ManyToOne(() => Lesson)
-  @JoinColumn({ name: 'sessionId' })
-  session: Lesson;
+  @JoinColumn({ name: 'lessionId' })
+  lession: Lesson;
+
+  @ManyToOne(() => Chapter)
+  @JoinColumn({ name: 'chapterId' })
+  chapter: Chapter;
+
+  @ManyToOne(() => Course)
+  @JoinColumn({ name: 'courseId' })
+  course: Course;
 
   @Column()
   isCompleted: boolean;

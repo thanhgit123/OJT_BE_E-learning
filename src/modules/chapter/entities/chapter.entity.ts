@@ -1,5 +1,6 @@
 import { Course } from 'src/modules/courses/entities/course.entity';
 import { Lesson } from 'src/modules/lesson/entities/lesson.entity';
+import { Progress } from 'src/modules/progress/entities/progress.entity';
 import {
   Column,
   Entity,
@@ -14,13 +15,13 @@ export class Chapter {
   @PrimaryGeneratedColumn({ type: 'bigint' })
   id: number;
 
-  @Column({ type: 'varchar', length: 255 ,default:"admin"})
+  @Column({ type: 'varchar', length: 255, default: 'admin' })
   create_by: string;
 
   @Column({ type: 'date' })
   create_date: Date;
 
-  @Column({ type: 'varchar', length: 255,default:"admin" })
+  @Column({ type: 'varchar', length: 255, default: 'admin' })
   modify_by: string;
 
   @Column({ type: 'date' })
@@ -41,4 +42,7 @@ export class Chapter {
 
   @OneToMany(() => Lesson, (lesson) => lesson.chapter)
   lessons: Lesson[];
+
+  @OneToMany(() => Progress, (progress) => progress.chapter)
+  progress: Progress[];
 }
