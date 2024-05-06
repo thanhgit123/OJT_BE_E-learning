@@ -14,6 +14,7 @@ import { CoursesService } from './courses.service';
 import { CreateCourseDto } from './dto/create-course.dto';
 import { UpdateCourseDto } from './dto/update-course.dto';
 import { AuthGuard } from 'src/guards/auth.guards';
+import { RolehGuard } from 'src/guards/role.guard';
 
 @Controller('courses')
 export class CoursesController {
@@ -28,7 +29,6 @@ export class CoursesController {
   findAll() {
     return this.coursesService.findAll();
   }
-
   @Get('PaginationCourse')
   paginationCourse(@Query('page') page: number, @Query('limit') limit: number) {
     return this.coursesService.paginationCourse(+page, limit);

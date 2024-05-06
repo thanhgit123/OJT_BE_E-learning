@@ -1,20 +1,35 @@
-import { Injectable, CanActivate, ExecutionContext } from '@nestjs/common';
+import {
+  Injectable,
+  CanActivate,
+  ExecutionContext,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
+import { JwtService } from '@nestjs/jwt';
 import { Observable } from 'rxjs';
 import { Role } from 'src/constant/enum';
 
 @Injectable()
 export class RolehGuard implements CanActivate {
-  constructor(private readonly reflector: Reflector) {}
+  constructor(
+    private readonly reflector: Reflector,
+    private readonly jwtService: JwtService,
+  ) {}
   canActivate(context: ExecutionContext): boolean {
-    const requiredRoles = this.reflector.getAllAndOverride<Role[]>(
-      'ROLES_KEY',
-      [context.getHandler(), context.getClass()],
-    );
-    if (!requiredRoles) {
-      return true;
+    const request = context.switchToHttp().getRequest();
+    const token = request.headers.authorization?.split(' ')[1];
+    if (!token) {
+      throw new UnauthorizedException();
     }
-    const { user } = context.switchToHttp().getRequest();
-    return requiredRoles.some((role) => user.roles?.includes(role));
+    try {
+      const decoded = this.jwtService.verify(token);
+      if (decoded.role === 1) {
+        return true;
+      } else {
+        return false;
+      }
+    } catch (error) {
+      throw new UnauthorizedException();
+    }
   }
 }
