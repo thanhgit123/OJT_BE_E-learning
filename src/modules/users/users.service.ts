@@ -9,7 +9,7 @@ import { RegisterDto } from '../auth/dto/register.dto';
 import * as bcrypt from 'bcrypt';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
-import { Repository } from 'typeorm';
+import { Like, Repository } from 'typeorm';
 import { LoginDto } from '../auth/dto/login.dto';
 import { UpdateStatusDto } from './dto/update-status.dto';
 
@@ -64,13 +64,22 @@ export class UsersService {
     }
   }
 
+  // async searchUser(searchValue: string) {
+  //     const result = await this.userRepository
+  //       .createQueryBuilder('user')
+  //       .where('user.full_name like :searchValue', { searchValue: `%${searchValue}%` })
+  //       .orWhere('user.phone like :searchValue', { searchValue: `%${searchValue}%` })
+  //       .getMany();
+  //   return result
+  // }
   async searchUser(searchValue: string) {
-      const result = await this.userRepository
-        .createQueryBuilder('user')
-        .where('user.full_name like :searchValue', { searchValue: `%${searchValue}%` })
-        .orWhere('user.phone like :searchValue', { searchValue: `%${searchValue}%` })
-        .getMany();
-    return result
+    const result = await this.userRepository.find({
+      where: [
+        {full_name: Like(`%${searchValue}%`)},
+        {phone: Like(`%${searchValue}%`)},
+      ]
+    });
+    return result;
   }
 
   async paginationUser(page:number,limit:number){
