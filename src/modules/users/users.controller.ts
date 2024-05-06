@@ -15,11 +15,10 @@ import {
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { UpdateStatusDto } from './dto/update-status.dto';
-import { RoleGuard } from 'src/shared/guard/auth.guard';
 import { Role } from 'src/constant/enum';
 import { Roles } from 'src/shared/decorators/role-decorator';
 import { AuthGuard } from 'src/guards/auth.guards';
-import { RolehGuard } from 'src/guards/role.guard';
+import { RoleGuard } from 'src/guards/role.guard';
 
 // @UseGuards(AuthGuard)
 @Controller('users')

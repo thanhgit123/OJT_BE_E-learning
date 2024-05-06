@@ -1,6 +1,6 @@
 export const JWT_CONFIG = {
   ACCESS_KEY: 'ACCESS_KEY',
   REFRESH_KEY: 'REFRESH_KEY',
-  ACCESS_TIME: '1h',
+  ACCESS_TIME: '4h',
   REFRESH_TIME: '1d',
 };

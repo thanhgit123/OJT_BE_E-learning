@@ -23,33 +23,34 @@ export class ProgressController {
 
   @UseGuards(AuthGuard)
   @Post('create')
-  create(@Body() createProgressDto: any, @Req() req: Request) {
+  async create(@Body() createProgressDto: any, @Req() req: Request) {
     const user: any = req.user;
     const data = {
-      userId: +user.id,
-      lessionId: +createProgressDto.lesson_id,
-      courseId: +createProgressDto.course_id,
-      chapterId: +createProgressDto.chapter_id,
+      user: +user.id,
+      lession: +createProgressDto.lesson_id,
+      course: +createProgressDto.course_id,
+      chapter: +createProgressDto.chapter_id,
       isCompleted: 1,
       notes: 'không có',
     };
+    const check = await this.progressService.findOne(
+      +createProgressDto.lesson_id,
+    );
+    if (check) {
+      return {
+        message: 'Bạn đã hoàn thành bài học này rồi',
+      };
+    }
     return this.progressService.create(data);
   }
-
-  @Get('check/:id')
+  @UseGuards(AuthGuard)
+  @Get('takeAll/:id')
   async check(@Param('id') id: number, @Req() req: Request) {
-    // logic lấy được  id  user  và id session
-    /*  console.log(req.headers.authorization); */
-    /* const data = {
-      session: +id,
-      userId: 4,
+    const user: any = req.user;
+    const data = {
+      user: +user.id,
+      course: +id,
     };
-    const checkProgress = await this.progressService.findOne(data);
-    if (checkProgress) {
-      return true;
-    } else {
-      return false;
-    } */
-    /* return this.progressService.search(id); */
+    return this.progressService.takeAll(data);
   }
 }
