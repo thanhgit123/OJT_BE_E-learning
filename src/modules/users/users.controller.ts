@@ -16,15 +16,19 @@ import {
 import { UsersService } from './users.service';
 import { UpdateStatusDto } from './dto/update-status.dto';
 import { AuthGuard } from 'src/guards/auth.guards';
+
 import { RoleGuard } from 'src/guards/role.guard';
+
 
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
   @Get('getAllUser')
+
   @UseGuards(RoleGuard)
   // @UseGuards(AuthGuard)
+
   async findAllUser() {
     return await this.usersService.findAll();
   }
