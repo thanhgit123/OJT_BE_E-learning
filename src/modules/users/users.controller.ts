@@ -36,7 +36,10 @@ export class UsersController {
   }
 
   @Get('paginationUser')
-  async paginationUser(@Query('page') page: number, @Query('limit') limit: number) {
+  async paginationUser(
+    @Query('page') page: number,
+    @Query('limit') limit: number,
+  ) {
     return await this.usersService.paginationUser(page, limit);
   }
 
@@ -49,7 +52,7 @@ export class UsersController {
   async updateStatus(@Body() body: UpdateStatusDto) {
     const result = await this.usersService.updateStatus(body);
     return {
-      statusCode: HttpStatus.OK,  
+      statusCode: HttpStatus.OK,
       message: 'Update status successfully',
       data: body,
     };
