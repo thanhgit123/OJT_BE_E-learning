@@ -22,7 +22,8 @@ export class ProgressService {
   }
   async create(newRecordData: any) {
     const newRecord = this.progress.create(newRecordData);
-    return await this.progress.save(newRecord);
+
+    return await this.progress.save(newRecordData);
   }
 
   async update(id: number, updateData: any): Promise<any> {
@@ -30,7 +31,7 @@ export class ProgressService {
     return result;
   }
   async findOne(data: any) {
-    const result = await this.progress.findOne({
+    /*  const result = await this.progress.findOne({
       where: {
         user: {
           id: data.userId,
@@ -41,6 +42,6 @@ export class ProgressService {
       },
     });
 
-    return result;
+    return result; */
   }
 }

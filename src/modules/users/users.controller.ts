@@ -18,6 +18,7 @@ import { UpdateStatusDto } from './dto/update-status.dto';
 import { RoleGuard } from 'src/shared/guard/auth.guard';
 import { Role } from 'src/constant/enum';
 import { Roles } from 'src/shared/decorators/role-decorator';
+import { AuthGuard } from 'src/guards/auth.guards';
 
 // @UseGuards(AuthGuard)
 @Controller('users')
@@ -28,7 +29,7 @@ export class UsersController {
   @Get('getAllUser')
   // @UseGuards(RoleGuard)
   // @Roles(Role.ADMIN)
-  @UseGuards(AuthGuard)
+  /* @UseGuards(AuthGuard) */
   async findAllUser() {
     return await this.usersService.findAll();
   }
@@ -40,7 +41,10 @@ export class UsersController {
   }
 
   @Get('paginationUser')
-  async paginationUser(@Query('page') page: number, @Query('limit') limit: number) {
+  async paginationUser(
+    @Query('page') page: number,
+    @Query('limit') limit: number,
+  ) {
     return await this.usersService.paginationUser(page, limit);
   }
 
