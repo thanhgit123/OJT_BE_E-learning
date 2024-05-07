@@ -42,13 +42,13 @@ export class Course {
   @Column({ type: 'longtext' })
   description: string;
 
+  @Column({ nullable: false, default: true })
+  status: boolean;
+
   @ManyToOne(() => Teacher, (teacher) => teacher.course)
   @JoinColumn({ name: 'teacher_id' })
   teacher: Teacher;
 
   @OneToMany(() => Chapter, (chapter) => chapter.course)
   chapters: Chapter[];
-
-  @OneToMany(() => Progress, (progress) => progress.course)
-  progress: Progress[];
 }

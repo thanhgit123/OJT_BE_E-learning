@@ -15,7 +15,12 @@ import {
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { UpdateStatusDto } from './dto/update-status.dto';
+
+import { Role } from 'src/constant/enum';
+import { Roles } from 'src/shared/decorators/role-decorator';
 import { AuthGuard } from 'src/guards/auth.guards';
+import { RoleGuard } from 'src/guards/role.guard';
+
 
 import { RoleGuard } from 'src/guards/role.guard';
 
