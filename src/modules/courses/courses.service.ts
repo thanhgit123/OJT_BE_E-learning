@@ -31,6 +31,13 @@ export class CoursesService {
   async findAll() {
     const result = await this.courseRepository.find({
       relations: ['teacher', 'chapters'],
+      where: { status: true },
+    });
+    return result;
+  }
+  async findAllAdmin() {
+    const result = await this.courseRepository.find({
+      relations: ['teacher', 'chapters'],
     });
     return result;
   }
@@ -41,18 +48,7 @@ export class CoursesService {
       .innerJoinAndSelect('course.teacher', 'teacher')
       .leftJoinAndSelect('course.chapters', 'chapters')
       .leftJoinAndSelect('chapters.lessons', 'lessons')
-      .select([
-        'chapters',
-        'course.title',
-        'course.image',
-        'course.description',
-        'course.id',
-        'lessons',
-        'teacher.name',
-        'teacher.specialize',
-        'teacher.description',
-        'teacher.image',
-      ])
+      .select(['course', 'teacher', 'chapters', 'lessons'])
       .orderBy('chapters.id', 'ASC')
       .addOrderBy('lessons.id', 'ASC')
       .where('course.id = :id', { id })
@@ -81,7 +77,9 @@ export class CoursesService {
     const result = await this.courseRepository.find({
       where: {
         title: Like(`%${searchValue}%`),
+        status: true,
       },
+      relations: ['teacher'],
     });
     const total = result.length;
     const totalPage = Math.ceil(total / 6);
@@ -97,10 +95,14 @@ export class CoursesService {
     const result = await this.courseRepository
       .createQueryBuilder('course')
       .leftJoinAndSelect('course.teacher', 'teacher')
+      .where('course.status = :status', { status: true })
       .offset((page - 1) * limit)
       .limit(limit)
       .getMany();
-    const total = await this.courseRepository.count();
+
+    const total = await this.courseRepository.count({
+      where: { status: true },
+    });
     const totalPage = Math.ceil(total / limit);
     return {
       data: result,
@@ -108,5 +110,11 @@ export class CoursesService {
       total: totalPage,
       totalItem: total,
     };
+  }
+
+  async updateById(id: number) {
+    const data = await this.courseRepository.findOne({ where: { id } });
+    data.status = !data.status;
+    return await this.courseRepository.update(id, data);
   }
 }

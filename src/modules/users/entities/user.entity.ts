@@ -1,4 +1,5 @@
 import { Role } from 'src/constant/enum';
+import { Progress } from 'src/modules/progress/entities/progress.entity';
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity({ name: 'users' })
@@ -35,4 +36,7 @@ export class User {
 
   @Column({ type: 'boolean', default: false })
   voided: boolean;
+
+  @OneToMany(() => Progress, (progress) => progress.user)
+  progress: Progress[];
 }

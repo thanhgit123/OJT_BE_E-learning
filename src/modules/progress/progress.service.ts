@@ -1,10 +1,6 @@
-/*
-https://docs.nestjs.com/providers#services
-*/
-
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Like, Repository } from 'typeorm';
 import { Progress } from './entities/progress.entity';
 
 @Injectable()
@@ -22,8 +18,7 @@ export class ProgressService {
   }
   async create(newRecordData: any) {
     const newRecord = this.progress.create(newRecordData);
-
-    return await this.progress.save(newRecordData);
+    return await this.progress.save(newRecord);
   }
 
   async update(id: number, updateData: any): Promise<any> {
@@ -31,17 +26,16 @@ export class ProgressService {
     return result;
   }
   async findOne(data: any) {
-    /*  const result = await this.progress.findOne({
-      where: {
-        user: {
-          id: data.userId,
-        },
-        session: {
-          id: data.sessionId,
-        },
-      },
-    });
+    const result = await this.progress.query(`
+    SELECT * FROM progress WHERE  lession_id = ${data}
+    `);
+    return result;
+  }
+  async takeAll(data: any) {
+    const result = await this.progress.query(`
+    SELECT * FROM progress WHERE userId = ${data.user} AND course_id = ${data.course}
+    `);
 
-    return result; */
+    return result;
   }
 }
