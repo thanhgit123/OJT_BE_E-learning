@@ -47,7 +47,4 @@ export class Lesson {
   @ManyToOne(() => Chapter, (chapter) => chapter.lessons)
   @JoinColumn({ name: 'chapter_id' })
   chapter: Chapter[];
-
-  @OneToMany(() => Progress, (progress) => progress.lession)
-  progress: Progress[];
 }

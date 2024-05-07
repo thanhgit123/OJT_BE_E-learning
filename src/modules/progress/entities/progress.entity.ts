@@ -21,17 +21,14 @@ export class Progress {
   @JoinColumn({ name: 'userId' })
   user: User;
 
-  @ManyToOne(() => Lesson)
-  @JoinColumn({ name: 'lessionId' })
-  lession: Lesson;
+  @Column()
+  lessionId: number;
 
-  @ManyToOne(() => Chapter)
-  @JoinColumn({ name: 'chapterId' })
-  chapter: Chapter;
+  @Column()
+  courseId: number;
 
-  @ManyToOne(() => Course)
-  @JoinColumn({ name: 'courseId' })
-  course: Course;
+  @Column()
+  chapterId: number;
 
   @Column()
   isCompleted: boolean;

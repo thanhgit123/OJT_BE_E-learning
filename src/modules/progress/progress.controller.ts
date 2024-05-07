@@ -27,16 +27,16 @@ export class ProgressController {
     const user: any = req.user;
     const data = {
       user: +user.id,
-      lession: +createProgressDto.lesson_id,
-      course: +createProgressDto.course_id,
-      chapter: +createProgressDto.chapter_id,
+      lessionId: +createProgressDto.lesson_id,
+      courseId: +createProgressDto.course_id,
+      chapterId: +createProgressDto.chapter_id,
       isCompleted: 1,
       notes: 'không có',
     };
     const check = await this.progressService.findOne(
       +createProgressDto.lesson_id,
     );
-    if (check) {
+    if (check.length > 0) {
       return {
         message: 'Bạn đã hoàn thành bài học này rồi',
       };
@@ -51,6 +51,8 @@ export class ProgressController {
       user: +user.id,
       course: +id,
     };
-    return this.progressService.takeAll(data);
+    const takeAll = await this.progressService.takeAll(data);
+
+    return takeAll;
   }
 }

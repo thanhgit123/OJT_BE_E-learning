@@ -26,21 +26,16 @@ export class ProgressService {
     return result;
   }
   async findOne(data: any) {
-    const result = await this.progress.findOne({
-      where: {
-        lession: data,
-      },
-    });
+    const result = await this.progress.query(`
+    SELECT * FROM progress WHERE  lession_id = ${data}
+    `);
     return result;
   }
   async takeAll(data: any) {
-    const id = data.course;
-    const result = await this.progress.find({
-      where: {
-        course: Like(`%${id}%`),
-        user: Like(`%${data.user}%`),
-      },
-    });
+    const result = await this.progress.query(`
+    SELECT * FROM progress WHERE userId = ${data.user} AND course_id = ${data.course}
+    `);
+
     return result;
   }
 }

@@ -42,7 +42,4 @@ export class Chapter {
 
   @OneToMany(() => Lesson, (lesson) => lesson.chapter)
   lessons: Lesson[];
-
-  @OneToMany(() => Progress, (progress) => progress.chapter)
-  progress: Progress[];
 }

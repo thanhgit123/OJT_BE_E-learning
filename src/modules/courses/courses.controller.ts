@@ -9,6 +9,7 @@ import {
   Put,
   Query,
   UseGuards,
+  ParseIntPipe,
 } from '@nestjs/common';
 import { CoursesService } from './courses.service';
 import { CreateCourseDto } from './dto/create-course.dto';
@@ -27,6 +28,12 @@ export class CoursesController {
   findAll() {
     return this.coursesService.findAll();
   }
+
+  @Get('listForAdmin')
+  findAllAdmin() {
+    return this.coursesService.findAllAdmin();
+  }
+
   @Get('PaginationCourse')
   paginationCourse(@Query('page') page: number, @Query('limit') limit: number) {
     return this.coursesService.paginationCourse(+page, limit);
@@ -50,5 +57,9 @@ export class CoursesController {
   @Put('update/:id')
   update(@Param('id') id: string, @Body() updateCourseDto: UpdateCourseDto) {
     return this.coursesService.update(+id, updateCourseDto);
+  }
+  @Delete('delete/:id')
+  async remove(@Param('id', ParseIntPipe) id: number) {
+    return await this.coursesService.updateById(+id);
   }
 }
